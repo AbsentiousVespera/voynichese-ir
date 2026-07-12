@@ -23,10 +23,10 @@ near-total consistency across 227 pages, multiple scribal hands, and both Currie
 Two working tools came out of it:
 
 - **The specification** — [`reports/SPEC.md`](reports/SPEC.md), all 15 deliverables
-  ([rendered version](https://claude.ai/code/artifact/7767824f-2ce0-4616-b1c4-1349a9298b86))
+  (rendered page: [`reports/voynichese-ir-spec.html`](reports/voynichese-ir-spec.html))
 - **The linter** — a live syntax checker that tells you whether any EVA string is processable
   Voynichese, with compiler-grade diagnostics
-  ([web version](https://claude.ai/code/artifact/7bdb3ccf-0f20-4e62-a188-e912d52520f1), CLI: `npm run lint -- "qokeedy shol daiin"`)
+  (open [`reports/voynichese-linter.html`](reports/voynichese-linter.html) in a browser, or CLI: `npm run lint -- "qokeedy shol daiin"`)
 
 ---
 
