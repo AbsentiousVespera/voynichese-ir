@@ -1,0 +1,1185 @@
+[
+ {
+  "rule": "y -> $",
+  "count": 13846,
+  "prob": 0.862,
+  "stability": 1,
+  "confidence": 1
+ },
+ {
+  "rule": "^ -> o",
+  "count": 6973,
+  "prob": 0.205,
+  "stability": 1,
+  "confidence": 0.98
+ },
+ {
+  "rule": "d -> y",
+  "count": 6404,
+  "prob": 0.541,
+  "stability": 1,
+  "confidence": 0.98
+ },
+ {
+  "rule": "n -> $",
+  "count": 5632,
+  "prob": 0.973,
+  "stability": 1,
+  "confidence": 0.97
+ },
+ {
+  "rule": "o -> k",
+  "count": 5543,
+  "prob": 0.249,
+  "stability": 1,
+  "confidence": 0.97
+ },
+ {
+  "rule": "^ -> ch",
+  "count": 5490,
+  "prob": 0.161,
+  "stability": 1,
+  "confidence": 0.97
+ },
+ {
+  "rule": "l -> $",
+  "count": 5315,
+  "prob": 0.562,
+  "stability": 1,
+  "confidence": 0.97
+ },
+ {
+  "rule": "^ -> q",
+  "count": 5271,
+  "prob": 0.155,
+  "stability": 1,
+  "confidence": 0.97
+ },
+ {
+  "rule": "q -> o",
+  "count": 5207,
+  "prob": 0.977,
+  "stability": 1,
+  "confidence": 0.96
+ },
+ {
+  "rule": "o -> l",
+  "count": 5122,
+  "prob": 0.23,
+  "stability": 1,
+  "confidence": 0.96
+ },
+ {
+  "rule": "r -> $",
+  "count": 5112,
+  "prob": 0.784,
+  "stability": 1,
+  "confidence": 0.96
+ },
+ {
+  "rule": "ch -> e",
+  "count": 3985,
+  "prob": 0.394,
+  "stability": 1,
+  "confidence": 0.95
+ },
+ {
+  "rule": "ii -> n",
+  "count": 3850,
+  "prob": 0.95,
+  "stability": 1,
+  "confidence": 0.95
+ },
+ {
+  "rule": "a -> ii",
+  "count": 3839,
+  "prob": 0.3,
+  "stability": 1,
+  "confidence": 0.95
+ },
+ {
+  "rule": "d -> a",
+  "count": 3678,
+  "prob": 0.311,
+  "stability": 1,
+  "confidence": 0.95
+ },
+ {
+  "rule": "e -> d",
+  "count": 3445,
+  "prob": 0.378,
+  "stability": 1,
+  "confidence": 0.94
+ },
+ {
+  "rule": "o -> t",
+  "count": 3206,
+  "prob": 0.144,
+  "stability": 1,
+  "confidence": 0.94
+ },
+ {
+  "rule": "^ -> d",
+  "count": 3144,
+  "prob": 0.092,
+  "stability": 1,
+  "confidence": 0.94
+ },
+ {
+  "rule": "^ -> sh",
+  "count": 2987,
+  "prob": 0.088,
+  "stability": 1,
+  "confidence": 0.93
+ },
+ {
+  "rule": "k -> a",
+  "count": 2870,
+  "prob": 0.313,
+  "stability": 1,
+  "confidence": 0.93
+ },
+ {
+  "rule": "a -> r",
+  "count": 2844,
+  "prob": 0.222,
+  "stability": 1,
+  "confidence": 0.93
+ },
+ {
+  "rule": "a -> l",
+  "count": 2634,
+  "prob": 0.206,
+  "stability": 1,
+  "confidence": 0.93
+ },
+ {
+  "rule": "o -> r",
+  "count": 2470,
+  "prob": 0.111,
+  "stability": 1,
+  "confidence": 0.92
+ },
+ {
+  "rule": "ch -> o",
+  "count": 2420,
+  "prob": 0.239,
+  "stability": 1,
+  "confidence": 0.92
+ },
+ {
+  "rule": "a -> i",
+  "count": 2289,
+  "prob": 0.179,
+  "stability": 1,
+  "confidence": 0.92
+ },
+ {
+  "rule": "e -> o",
+  "count": 2264,
+  "prob": 0.248,
+  "stability": 1,
+  "confidence": 0.92
+ },
+ {
+  "rule": "o -> d",
+  "count": 1981,
+  "prob": 0.089,
+  "stability": 1,
+  "confidence": 0.91
+ },
+ {
+  "rule": "e -> y",
+  "count": 1979,
+  "prob": 0.217,
+  "stability": 1,
+  "confidence": 0.91
+ },
+ {
+  "rule": "sh -> e",
+  "count": 1977,
+  "prob": 0.466,
+  "stability": 1,
+  "confidence": 0.91
+ },
+ {
+  "rule": "k -> ee",
+  "count": 1858,
+  "prob": 0.203,
+  "stability": 1,
+  "confidence": 0.91
+ },
+ {
+  "rule": "^ -> a",
+  "count": 1783,
+  "prob": 0.052,
+  "stability": 1,
+  "confidence": 0.91
+ },
+ {
+  "rule": "i -> n",
+  "count": 1663,
+  "prob": 0.697,
+  "stability": 1,
+  "confidence": 0.9
+ },
+ {
+  "rule": "^ -> y",
+  "count": 1624,
+  "prob": 0.048,
+  "stability": 1,
+  "confidence": 0.9
+ },
+ {
+  "rule": "ee -> y",
+  "count": 1593,
+  "prob": 0.404,
+  "stability": 1,
+  "confidence": 0.9
+ },
+ {
+  "rule": "k -> e",
+  "count": 1566,
+  "prob": 0.171,
+  "stability": 1,
+  "confidence": 0.9
+ },
+ {
+  "rule": "t -> a",
+  "count": 1437,
+  "prob": 0.28,
+  "stability": 1,
+  "confidence": 0.89
+ },
+ {
+  "rule": "^ -> l",
+  "count": 1399,
+  "prob": 0.041,
+  "stability": 1,
+  "confidence": 0.89
+ },
+ {
+  "rule": "ee -> d",
+  "count": 1306,
+  "prob": 0.331,
+  "stability": 1,
+  "confidence": 0.89
+ },
+ {
+  "rule": "^ -> k",
+  "count": 1199,
+  "prob": 0.035,
+  "stability": 1,
+  "confidence": 0.88
+ },
+ {
+  "rule": "o -> $",
+  "count": 1135,
+  "prob": 0.051,
+  "stability": 1,
+  "confidence": 0.88
+ },
+ {
+  "rule": "^ -> s",
+  "count": 1115,
+  "prob": 0.033,
+  "stability": 1,
+  "confidence": 0.88
+ },
+ {
+  "rule": "s -> $",
+  "count": 1066,
+  "prob": 0.475,
+  "stability": 1,
+  "confidence": 0.88
+ },
+ {
+  "rule": "l -> k",
+  "count": 1015,
+  "prob": 0.107,
+  "stability": 1,
+  "confidence": 0.88
+ },
+ {
+  "rule": "k -> ch",
+  "count": 975,
+  "prob": 0.106,
+  "stability": 1,
+  "confidence": 0.87
+ },
+ {
+  "rule": "^ -> t",
+  "count": 959,
+  "prob": 0.028,
+  "stability": 1,
+  "confidence": 0.87
+ },
+ {
+  "rule": "sh -> o",
+  "count": 933,
+  "prob": 0.22,
+  "stability": 1,
+  "confidence": 0.87
+ },
+ {
+  "rule": "t -> ch",
+  "count": 914,
+  "prob": 0.178,
+  "stability": 1,
+  "confidence": 0.87
+ },
+ {
+  "rule": "ch -> y",
+  "count": 903,
+  "prob": 0.089,
+  "stability": 1,
+  "confidence": 0.87
+ },
+ {
+  "rule": "m -> $",
+  "count": 882,
+  "prob": 0.948,
+  "stability": 1,
+  "confidence": 0.87
+ },
+ {
+  "rule": "t -> e",
+  "count": 800,
+  "prob": 0.156,
+  "stability": 1,
+  "confidence": 0.86
+ },
+ {
+  "rule": "ch -> d",
+  "count": 741,
+  "prob": 0.073,
+  "stability": 0.83,
+  "confidence": 0.78
+ },
+ {
+  "rule": "l -> ch",
+  "count": 717,
+  "prob": 0.076,
+  "stability": 1,
+  "confidence": 0.86
+ },
+ {
+  "rule": "a -> m",
+  "count": 701,
+  "prob": 0.055,
+  "stability": 1,
+  "confidence": 0.86
+ },
+ {
+  "rule": "p -> ch",
+  "count": 699,
+  "prob": 0.541,
+  "stability": 1,
+  "confidence": 0.86
+ },
+ {
+  "rule": "ch -> ee",
+  "count": 696,
+  "prob": 0.069,
+  "stability": 1,
+  "confidence": 0.86
+ },
+ {
+  "rule": "k -> y",
+  "count": 689,
+  "prob": 0.075,
+  "stability": 0.83,
+  "confidence": 0.77
+ },
+ {
+  "rule": "k -> o",
+  "count": 662,
+  "prob": 0.072,
+  "stability": 1,
+  "confidence": 0.85
+ },
+ {
+  "rule": "y -> k",
+  "count": 630,
+  "prob": 0.039,
+  "stability": 1,
+  "confidence": 0.85
+ },
+ {
+  "rule": "t -> o",
+  "count": 613,
+  "prob": 0.12,
+  "stability": 1,
+  "confidence": 0.85
+ },
+ {
+  "rule": "t -> ee",
+  "count": 590,
+  "prob": 0.115,
+  "stability": 1,
+  "confidence": 0.85
+ },
+ {
+  "rule": "ee -> o",
+  "count": 578,
+  "prob": 0.147,
+  "stability": 1,
+  "confidence": 0.85
+ },
+ {
+  "rule": "r -> a",
+  "count": 566,
+  "prob": 0.087,
+  "stability": 1,
+  "confidence": 0.84
+ },
+ {
+  "rule": "y -> t",
+  "count": 528,
+  "prob": 0.033,
+  "stability": 1,
+  "confidence": 0.84
+ },
+ {
+  "rule": "^ -> p",
+  "count": 526,
+  "prob": 0.015,
+  "stability": 0.83,
+  "confidence": 0.76
+ },
+ {
+  "rule": "d -> $",
+  "count": 524,
+  "prob": 0.044,
+  "stability": 1,
+  "confidence": 0.84
+ },
+ {
+  "rule": "l -> o",
+  "count": 523,
+  "prob": 0.055,
+  "stability": 1,
+  "confidence": 0.84
+ },
+ {
+  "rule": "s -> a",
+  "count": 514,
+  "prob": 0.229,
+  "stability": 1,
+  "confidence": 0.84
+ },
+ {
+  "rule": "o -> p",
+  "count": 513,
+  "prob": 0.023,
+  "stability": 1,
+  "confidence": 0.84
+ },
+ {
+  "rule": "i -> r",
+  "count": 510,
+  "prob": 0.214,
+  "stability": 1,
+  "confidence": 0.84
+ },
+ {
+  "rule": "^ -> r",
+  "count": 480,
+  "prob": 0.014,
+  "stability": 1,
+  "confidence": 0.84
+ },
+ {
+  "rule": "sh -> ee",
+  "count": 476,
+  "prob": 0.112,
+  "stability": 1,
+  "confidence": 0.83
+ },
+ {
+  "rule": "^ -> cth",
+  "count": 458,
+  "prob": 0.013,
+  "stability": 0.83,
+  "confidence": 0.75
+ },
+ {
+  "rule": "d -> o",
+  "count": 453,
+  "prob": 0.038,
+  "stability": 0.83,
+  "confidence": 0.75
+ },
+ {
+  "rule": "ch -> a",
+  "count": 451,
+  "prob": 0.045,
+  "stability": 0.83,
+  "confidence": 0.75
+ },
+ {
+  "rule": "t -> y",
+  "count": 445,
+  "prob": 0.087,
+  "stability": 1,
+  "confidence": 0.83
+ },
+ {
+  "rule": "ckh -> y",
+  "count": 431,
+  "prob": 0.499,
+  "stability": 0.83,
+  "confidence": 0.75
+ },
+ {
+  "rule": "l -> d",
+  "count": 426,
+  "prob": 0.045,
+  "stability": 1,
+  "confidence": 0.83
+ },
+ {
+  "rule": "l -> y",
+  "count": 396,
+  "prob": 0.042,
+  "stability": 1,
+  "confidence": 0.82
+ },
+ {
+  "rule": "o -> s",
+  "count": 367,
+  "prob": 0.016,
+  "stability": 1,
+  "confidence": 0.82
+ },
+ {
+  "rule": "cth -> y",
+  "count": 353,
+  "prob": 0.4,
+  "stability": 0.83,
+  "confidence": 0.74
+ },
+ {
+  "rule": "s -> o",
+  "count": 345,
+  "prob": 0.154,
+  "stability": 1,
+  "confidence": 0.82
+ },
+ {
+  "rule": "r -> o",
+  "count": 333,
+  "prob": 0.051,
+  "stability": 1,
+  "confidence": 0.82
+ },
+ {
+  "rule": "l -> a",
+  "count": 326,
+  "prob": 0.034,
+  "stability": 1,
+  "confidence": 0.81
+ },
+ {
+  "rule": "e -> a",
+  "count": 326,
+  "prob": 0.036,
+  "stability": 0.83,
+  "confidence": 0.73
+ },
+ {
+  "rule": "e -> k",
+  "count": 314,
+  "prob": 0.034,
+  "stability": 1,
+  "confidence": 0.81
+ },
+ {
+  "rule": "d -> ch",
+  "count": 308,
+  "prob": 0.026,
+  "stability": 1,
+  "confidence": 0.81
+ },
+ {
+  "rule": "l -> sh",
+  "count": 301,
+  "prob": 0.032,
+  "stability": 0.83,
+  "confidence": 0.73
+ },
+ {
+  "rule": "y -> ch",
+  "count": 283,
+  "prob": 0.018,
+  "stability": 1,
+  "confidence": 0.81
+ },
+ {
+  "rule": "sh -> y",
+  "count": 257,
+  "prob": 0.061,
+  "stability": 1,
+  "confidence": 0.8
+ },
+ {
+  "rule": "ch -> ckh",
+  "count": 243,
+  "prob": 0.024,
+  "stability": 0.83,
+  "confidence": 0.71
+ },
+ {
+  "rule": "o -> a",
+  "count": 232,
+  "prob": 0.01,
+  "stability": 0.83,
+  "confidence": 0.71
+ },
+ {
+  "rule": "y -> d",
+  "count": 222,
+  "prob": 0.014,
+  "stability": 0.83,
+  "confidence": 0.71
+ },
+ {
+  "rule": "ckh -> e",
+  "count": 220,
+  "prob": 0.255,
+  "stability": 0.83,
+  "confidence": 0.71
+ },
+ {
+  "rule": "p -> o",
+  "count": 219,
+  "prob": 0.17,
+  "stability": 0.83,
+  "confidence": 0.71
+ },
+ {
+  "rule": "cth -> o",
+  "count": 218,
+  "prob": 0.247,
+  "stability": 0.67,
+  "confidence": 0.63
+ },
+ {
+  "rule": "r -> y",
+  "count": 215,
+  "prob": 0.033,
+  "stability": 0.83,
+  "confidence": 0.71
+ },
+ {
+  "rule": "k -> sh",
+  "count": 201,
+  "prob": 0.022,
+  "stability": 0.83,
+  "confidence": 0.7
+ },
+ {
+  "rule": "o -> ii",
+  "count": 186,
+  "prob": 0.008,
+  "stability": 0.83,
+  "confidence": 0.7
+ },
+ {
+  "rule": "o -> ckh",
+  "count": 179,
+  "prob": 0.008,
+  "stability": 0.67,
+  "confidence": 0.61
+ },
+ {
+  "rule": "^ -> ckh",
+  "count": 178,
+  "prob": 0.005,
+  "stability": 0.5,
+  "confidence": 0.53
+ },
+ {
+  "rule": "f -> ch",
+  "count": 172,
+  "prob": 0.489,
+  "stability": 0.83,
+  "confidence": 0.7
+ },
+ {
+  "rule": "sh -> d",
+  "count": 169,
+  "prob": 0.04,
+  "stability": 0.83,
+  "confidence": 0.7
+ },
+ {
+  "rule": "eee -> y",
+  "count": 168,
+  "prob": 0.475,
+  "stability": 1,
+  "confidence": 0.78
+ },
+ {
+  "rule": "t -> sh",
+  "count": 166,
+  "prob": 0.032,
+  "stability": 0.67,
+  "confidence": 0.61
+ },
+ {
+  "rule": "k -> eee",
+  "count": 164,
+  "prob": 0.018,
+  "stability": 0.83,
+  "confidence": 0.69
+ },
+ {
+  "rule": "o -> m",
+  "count": 163,
+  "prob": 0.007,
+  "stability": 0.67,
+  "confidence": 0.61
+ },
+ {
+  "rule": "cth -> e",
+  "count": 162,
+  "prob": 0.184,
+  "stability": 0.83,
+  "confidence": 0.69
+ },
+ {
+  "rule": "d -> sh",
+  "count": 161,
+  "prob": 0.014,
+  "stability": 0.83,
+  "confidence": 0.69
+ },
+ {
+  "rule": "p -> a",
+  "count": 160,
+  "prob": 0.124,
+  "stability": 0.67,
+  "confidence": 0.61
+ },
+ {
+  "rule": "iii -> n",
+  "count": 157,
+  "prob": 0.908,
+  "stability": 0.83,
+  "confidence": 0.69
+ },
+ {
+  "rule": "ch -> k",
+  "count": 153,
+  "prob": 0.015,
+  "stability": 0.67,
+  "confidence": 0.61
+ },
+ {
+  "rule": "ee -> s",
+  "count": 150,
+  "prob": 0.038,
+  "stability": 0.83,
+  "confidence": 0.69
+ },
+ {
+  "rule": "o -> ee",
+  "count": 144,
+  "prob": 0.006,
+  "stability": 0.83,
+  "confidence": 0.69
+ },
+ {
+  "rule": "o -> ch",
+  "count": 141,
+  "prob": 0.006,
+  "stability": 0.67,
+  "confidence": 0.6
+ },
+ {
+  "rule": "l -> s",
+  "count": 138,
+  "prob": 0.015,
+  "stability": 0.83,
+  "confidence": 0.68
+ },
+ {
+  "rule": "o -> cth",
+  "count": 137,
+  "prob": 0.006,
+  "stability": 0.83,
+  "confidence": 0.68
+ },
+ {
+  "rule": "sh -> a",
+  "count": 136,
+  "prob": 0.032,
+  "stability": 0.67,
+  "confidence": 0.6
+ },
+ {
+  "rule": "ch -> cth",
+  "count": 134,
+  "prob": 0.013,
+  "stability": 0.67,
+  "confidence": 0.6
+ },
+ {
+  "rule": "e -> t",
+  "count": 134,
+  "prob": 0.015,
+  "stability": 1,
+  "confidence": 0.77
+ },
+ {
+  "rule": "r -> ch",
+  "count": 130,
+  "prob": 0.02,
+  "stability": 0.83,
+  "confidence": 0.68
+ },
+ {
+  "rule": "ii -> r",
+  "count": 130,
+  "prob": 0.032,
+  "stability": 0.83,
+  "confidence": 0.68
+ },
+ {
+  "rule": "e -> ckh",
+  "count": 130,
+  "prob": 0.014,
+  "stability": 0.5,
+  "confidence": 0.51
+ },
+ {
+  "rule": "a -> iii",
+  "count": 129,
+  "prob": 0.01,
+  "stability": 0.83,
+  "confidence": 0.68
+ },
+ {
+  "rule": "o -> f",
+  "count": 127,
+  "prob": 0.006,
+  "stability": 0.83,
+  "confidence": 0.68
+ },
+ {
+  "rule": "o -> e",
+  "count": 126,
+  "prob": 0.006,
+  "stability": 0.67,
+  "confidence": 0.6
+ },
+ {
+  "rule": "e -> s",
+  "count": 117,
+  "prob": 0.013,
+  "stability": 0.83,
+  "confidence": 0.68
+ },
+ {
+  "rule": "^ -> cph",
+  "count": 116,
+  "prob": 0.003,
+  "stability": 0.83,
+  "confidence": 0.67
+ },
+ {
+  "rule": "o -> y",
+  "count": 116,
+  "prob": 0.005,
+  "stability": 0.83,
+  "confidence": 0.67
+ },
+ {
+  "rule": "h -> y",
+  "count": 115,
+  "prob": 0.558,
+  "stability": 1,
+  "confidence": 0.76
+ },
+ {
+  "rule": "y -> o",
+  "count": 114,
+  "prob": 0.007,
+  "stability": 0.67,
+  "confidence": 0.59
+ },
+ {
+  "rule": "y -> sh",
+  "count": 113,
+  "prob": 0.007,
+  "stability": 0.83,
+  "confidence": 0.67
+ },
+ {
+  "rule": "e -> ch",
+  "count": 113,
+  "prob": 0.012,
+  "stability": 0.5,
+  "confidence": 0.51
+ },
+ {
+  "rule": "g -> $",
+  "count": 111,
+  "prob": 0.917,
+  "stability": 1,
+  "confidence": 0.76
+ },
+ {
+  "rule": "^ -> f",
+  "count": 108,
+  "prob": 0.003,
+  "stability": 0.83,
+  "confidence": 0.67
+ },
+ {
+  "rule": "a -> n",
+  "count": 106,
+  "prob": 0.008,
+  "stability": 0.67,
+  "confidence": 0.59
+ },
+ {
+  "rule": "s -> y",
+  "count": 100,
+  "prob": 0.045,
+  "stability": 0.83,
+  "confidence": 0.67
+ },
+ {
+  "rule": "l -> t",
+  "count": 94,
+  "prob": 0.01,
+  "stability": 0.67,
+  "confidence": 0.58
+ },
+ {
+  "rule": "sh -> ckh",
+  "count": 94,
+  "prob": 0.022,
+  "stability": 0.67,
+  "confidence": 0.58
+ },
+ {
+  "rule": "ckh -> o",
+  "count": 92,
+  "prob": 0.107,
+  "stability": 0.5,
+  "confidence": 0.5
+ },
+ {
+  "rule": "ee -> k",
+  "count": 82,
+  "prob": 0.021,
+  "stability": 0.5,
+  "confidence": 0.49
+ },
+ {
+  "rule": "ee -> a",
+  "count": 79,
+  "prob": 0.02,
+  "stability": 0.67,
+  "confidence": 0.57
+ },
+ {
+  "rule": "y -> p",
+  "count": 78,
+  "prob": 0.005,
+  "stability": 0.5,
+  "confidence": 0.49
+ },
+ {
+  "rule": "ch -> s",
+  "count": 75,
+  "prob": 0.007,
+  "stability": 0.67,
+  "confidence": 0.57
+ },
+ {
+  "rule": "k -> $",
+  "count": 74,
+  "prob": 0.008,
+  "stability": 0.67,
+  "confidence": 0.57
+ },
+ {
+  "rule": "eee -> d",
+  "count": 74,
+  "prob": 0.209,
+  "stability": 0.5,
+  "confidence": 0.48
+ },
+ {
+  "rule": "s -> ch",
+  "count": 72,
+  "prob": 0.032,
+  "stability": 0.33,
+  "confidence": 0.4
+ },
+ {
+  "rule": "p -> sh",
+  "count": 72,
+  "prob": 0.056,
+  "stability": 0.67,
+  "confidence": 0.57
+ },
+ {
+  "rule": "ch -> t",
+  "count": 71,
+  "prob": 0.007,
+  "stability": 0.5,
+  "confidence": 0.48
+ },
+ {
+  "rule": "d -> l",
+  "count": 69,
+  "prob": 0.006,
+  "stability": 0.5,
+  "confidence": 0.48
+ },
+ {
+  "rule": "o -> o",
+  "count": 68,
+  "prob": 0.003,
+  "stability": 0.5,
+  "confidence": 0.48
+ },
+ {
+  "rule": "e -> cth",
+  "count": 66,
+  "prob": 0.007,
+  "stability": 0.5,
+  "confidence": 0.48
+ },
+ {
+  "rule": "a -> s",
+  "count": 65,
+  "prob": 0.005,
+  "stability": 0.83,
+  "confidence": 0.64
+ },
+ {
+  "rule": "p -> y",
+  "count": 65,
+  "prob": 0.05,
+  "stability": 0.5,
+  "confidence": 0.48
+ },
+ {
+  "rule": "cth -> a",
+  "count": 63,
+  "prob": 0.071,
+  "stability": 0.5,
+  "confidence": 0.47
+ },
+ {
+  "rule": "e -> p",
+  "count": 62,
+  "prob": 0.007,
+  "stability": 0.5,
+  "confidence": 0.47
+ },
+ {
+  "rule": "t -> $",
+  "count": 61,
+  "prob": 0.012,
+  "stability": 0.33,
+  "confidence": 0.39
+ },
+ {
+  "rule": "o -> i",
+  "count": 61,
+  "prob": 0.003,
+  "stability": 0.83,
+  "confidence": 0.64
+ },
+ {
+  "rule": "cph -> e",
+  "count": 61,
+  "prob": 0.308,
+  "stability": 0.83,
+  "confidence": 0.64
+ },
+ {
+  "rule": "f -> a",
+  "count": 58,
+  "prob": 0.165,
+  "stability": 0.5,
+  "confidence": 0.47
+ },
+ {
+  "rule": "y -> s",
+  "count": 57,
+  "prob": 0.004,
+  "stability": 0.5,
+  "confidence": 0.47
+ },
+ {
+  "rule": "o -> sh",
+  "count": 57,
+  "prob": 0.003,
+  "stability": 0.67,
+  "confidence": 0.55
+ },
+ {
+  "rule": "e -> $",
+  "count": 57,
+  "prob": 0.006,
+  "stability": 0.33,
+  "confidence": 0.39
+ },
+ {
+  "rule": "a -> $",
+  "count": 56,
+  "prob": 0.004,
+  "stability": 0.83,
+  "confidence": 0.64
+ },
+ {
+  "rule": "f -> o",
+  "count": 54,
+  "prob": 0.153,
+  "stability": 0.67,
+  "confidence": 0.55
+ },
+ {
+  "rule": "ch -> l",
+  "count": 54,
+  "prob": 0.005,
+  "stability": 0.5,
+  "confidence": 0.47
+ },
+ {
+  "rule": "d -> ee",
+  "count": 53,
+  "prob": 0.004,
+  "stability": 0.67,
+  "confidence": 0.55
+ },
+ {
+  "rule": "^ -> c",
+  "count": 50,
+  "prob": 0.001,
+  "stability": 0.17,
+  "confidence": 0.3
+ },
+ {
+  "rule": "y -> y",
+  "count": 50,
+  "prob": 0.003,
+  "stability": 0.17,
+  "confidence": 0.3
+ },
+ {
+  "rule": "cph -> o",
+  "count": 50,
+  "prob": 0.253,
+  "stability": 0.5,
+  "confidence": 0.46
+ }
+]

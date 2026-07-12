@@ -1,0 +1,293 @@
+{
+  "locusTypes": {
+    "P0": 3885,
+    "Pt": 10,
+    "Lp": 3,
+    "L0": 252,
+    "Pc": 17,
+    "Lx": 3,
+    "Pr": 12,
+    "P1": 72,
+    "Cc": 83,
+    "Ro": 67,
+    "Ri": 75,
+    "Pb": 134,
+    "Ls": 65,
+    "La": 7,
+    "Lz": 29,
+    "Ln": 63,
+    "Lt": 47,
+    "Ca": 1,
+    "Lc": 40,
+    "Lf": 194
+  },
+  "linesPerParagraph": {
+    "n": 750,
+    "mean": 5.51,
+    "median": 4,
+    "min": 1,
+    "max": 32
+  },
+  "tokensPerLine": {
+    "text-only": {
+      "n": 226,
+      "mean": 10.16,
+      "median": 10,
+      "min": 1,
+      "max": 16
+    },
+    "herbal": {
+      "n": 1608,
+      "mean": 6.77,
+      "median": 7,
+      "min": 1,
+      "max": 14
+    },
+    "stars-recipes": {
+      "n": 1164,
+      "mean": 10.01,
+      "median": 10,
+      "min": 1,
+      "max": 19
+    },
+    "astronomical": {
+      "n": 56,
+      "mean": 4.93,
+      "median": 3,
+      "min": 1,
+      "max": 13
+    },
+    "cosmological": {
+      "n": 107,
+      "mean": 6.52,
+      "median": 6,
+      "min": 1,
+      "max": 15
+    },
+    "biological": {
+      "n": 745,
+      "mean": 8.32,
+      "median": 9,
+      "min": 1,
+      "max": 16
+    },
+    "pharmaceutical": {
+      "n": 224,
+      "mean": 10.33,
+      "median": 9,
+      "min": 2,
+      "max": 26
+    }
+  },
+  "parasPerPage": {
+    "text-only": {
+      "n": 7,
+      "mean": 4.43,
+      "median": 4,
+      "min": 0,
+      "max": 9
+    },
+    "herbal": {
+      "n": 129,
+      "mean": 1.91,
+      "median": 2,
+      "min": 0,
+      "max": 5
+    },
+    "cosmological": {
+      "n": 11,
+      "mean": 2.18,
+      "median": 1,
+      "min": 0,
+      "max": 6
+    },
+    "stars-recipes": {
+      "n": 25,
+      "mean": 11.68,
+      "median": 13,
+      "min": 3,
+      "max": 18
+    },
+    "astronomical": {
+      "n": 8,
+      "mean": 2.25,
+      "median": 1,
+      "min": 0,
+      "max": 13
+    },
+    "zodiac": {
+      "n": 12,
+      "mean": 0,
+      "median": 0,
+      "min": 0,
+      "max": 0
+    },
+    "biological": {
+      "n": 19,
+      "mean": 4.95,
+      "median": 5,
+      "min": 2,
+      "max": 10
+    },
+    "pharmaceutical": {
+      "n": 16,
+      "mean": 2.75,
+      "median": 3,
+      "min": 1,
+      "max": 4
+    }
+  },
+  "labels": {
+    "labelLoci": 703,
+    "labelTokens": 777,
+    "singleTokenLabelLoci": 640
+  },
+  "lineTokensByParaPosition": {
+    "first": {
+      "n": 742,
+      "mean": 9.12,
+      "median": 9,
+      "min": 1,
+      "max": 26
+    },
+    "middle": {
+      "n": 2638,
+      "mean": 8.74,
+      "median": 9,
+      "min": 1,
+      "max": 26
+    },
+    "last": {
+      "n": 742,
+      "mean": 5.97,
+      "median": 6,
+      "min": 1,
+      "max": 25
+    },
+    "only": {
+      "n": 8,
+      "mean": 8.88,
+      "median": 10,
+      "min": 3,
+      "max": 14
+    }
+  },
+  "shapeInventoryTop": [
+    [
+      "Mad",
+      7449
+    ],
+    [
+      "M",
+      5600
+    ],
+    [
+      "Md",
+      4397
+    ],
+    [
+      "Lad",
+      4288
+    ],
+    [
+      "S",
+      3937
+    ],
+    [
+      "Ma",
+      3717
+    ],
+    [
+      "Sd",
+      1406
+    ],
+    [
+      "La",
+      1169
+    ],
+    [
+      "Ld",
+      715
+    ],
+    [
+      "L",
+      660
+    ],
+    [
+      "Sa",
+      419
+    ],
+    [
+      "Sad",
+      400
+    ]
+  ],
+  "tokenLenByLinePosition": {
+    "first": {
+      "n": 4130,
+      "mean": 5.46,
+      "median": 5,
+      "min": 1,
+      "max": 15
+    },
+    "second": {
+      "n": 4103,
+      "mean": 5.03,
+      "median": 5,
+      "min": 1,
+      "max": 16
+    },
+    "middle": {
+      "n": 17993,
+      "mean": 5.07,
+      "median": 5,
+      "min": 1,
+      "max": 19
+    },
+    "penult": {
+      "n": 3887,
+      "mean": 5.15,
+      "median": 5,
+      "min": 1,
+      "max": 22
+    },
+    "last": {
+      "n": 4044,
+      "mean": 4.87,
+      "median": 5,
+      "min": 1,
+      "max": 21
+    }
+  },
+  "ascenderRate": {
+    "paraInitial": 0.917,
+    "lineInitial": 0.423,
+    "other": 0.51
+  },
+  "descenderFinalRate": {
+    "lineFinal": 0.567,
+    "other": 0.418
+  },
+  "shapeBigramCond": {
+    "M": {
+      "M": 0.631,
+      "S": 0.179,
+      "L": 0.19
+    },
+    "S": {
+      "M": 0.616,
+      "S": 0.26,
+      "L": 0.125
+    },
+    "L": {
+      "M": 0.605,
+      "S": 0.14,
+      "L": 0.256
+    }
+  },
+  "shapeMarginal": {
+    "M": 0.62,
+    "S": 0.18,
+    "L": 0.2
+  }
+}

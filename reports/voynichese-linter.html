@@ -1,0 +1,253 @@
+<title>Voynichese Linter</title>
+<style>
+  :root {
+    --paper: #faf8f4; --ink: #2b2320; --ink-soft: #6b6259; --rule: #d9d2c4;
+    --accent: #4f7a5b; --accent-ink: #3d6249; --rubric: #a04432; --amber: #9a6d1f;
+    --panel: #f1ede4; --chip-ok: #e6efe8; --chip-err: #f3e2dc; --chip-warn: #f2ead6;
+    --mono: ui-monospace, "Cascadia Code", Consolas, Menlo, monospace;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Charter, Georgia, serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --paper:#1c1917; --ink:#e8e2d6; --ink-soft:#a89e90; --rule:#3a342c;
+      --accent:#7fae8c; --accent-ink:#8fbc9b; --rubric:#d08a6f; --amber:#cfa14e;
+      --panel:#26221d; --chip-ok:#2a332b; --chip-err:#3a2b26; --chip-warn:#36301f; }
+  }
+  :root[data-theme="dark"] { --paper:#1c1917; --ink:#e8e2d6; --ink-soft:#a89e90; --rule:#3a342c;
+      --accent:#7fae8c; --accent-ink:#8fbc9b; --rubric:#d08a6f; --amber:#cfa14e;
+      --panel:#26221d; --chip-ok:#2a332b; --chip-err:#3a2b26; --chip-warn:#36301f; }
+  :root[data-theme="light"] { --paper:#faf8f4; --ink:#2b2320; --ink-soft:#6b6259; --rule:#d9d2c4;
+      --accent:#4f7a5b; --accent-ink:#3d6249; --rubric:#a04432; --amber:#9a6d1f;
+      --panel:#f1ede4; --chip-ok:#e6efe8; --chip-err:#f3e2dc; --chip-warn:#f2ead6; }
+
+  html { background: var(--paper); }
+  body { font-family: var(--serif); color: var(--ink); margin: 0; line-height: 1.5; }
+  .wrap { max-width: 44rem; margin: 0 auto; padding: 2.2rem 1.25rem 4rem; }
+  .eyebrow { font-family: var(--mono); font-size: .7rem; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--accent-ink); }
+  h1 { font-size: clamp(1.6rem, 4.5vw, 2.2rem); margin: .3rem 0 .3rem; font-weight: 600; text-wrap: balance; }
+  .sub { color: var(--ink-soft); margin: 0 0 1.6rem; }
+
+  textarea { width: 100%; box-sizing: border-box; min-height: 5.5rem; resize: vertical;
+    font-family: var(--mono); font-size: .95rem; line-height: 1.7; color: var(--ink);
+    background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+    padding: .8rem .9rem; }
+  textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .btns { display: flex; flex-wrap: wrap; gap: .5rem; margin: .7rem 0 1.4rem; }
+  button { font-family: var(--mono); font-size: .74rem; letter-spacing: .04em;
+    background: none; border: 1px solid var(--rule); border-radius: 4px;
+    color: var(--ink); padding: .35rem .7rem; cursor: pointer; }
+  button:hover { border-color: var(--accent); color: var(--accent-ink); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .verdict { font-family: var(--mono); font-size: .8rem; letter-spacing: .06em;
+    padding: .55rem .9rem; border-radius: 4px; margin-bottom: 1rem;
+    border: 1px solid var(--rule); display: flex; gap: 1rem; flex-wrap: wrap; }
+  .verdict.good { border-color: var(--accent); color: var(--accent-ink); }
+  .verdict.bad { border-color: var(--rubric); color: var(--rubric); }
+  .verdict b { font-weight: 700; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: .45rem .5rem; margin-bottom: 1.2rem; }
+  .chip { font-family: var(--mono); font-size: .84rem; padding: .22rem .55rem;
+    border-radius: 4px; border: 1px solid var(--rule); cursor: pointer; }
+  .chip.ok    { background: var(--chip-ok); color: var(--accent-ink); }
+  .chip.novel { background: none; color: var(--accent-ink); border-style: dashed; }
+  .chip.warn  { background: var(--chip-warn); color: var(--amber); }
+  .chip.error { background: var(--chip-err); color: var(--rubric); text-decoration: underline wavy; text-underline-offset: 3px; }
+  .chip.sel { outline: 2px solid currentColor; outline-offset: 1px; }
+
+  .detail { border: 1px solid var(--rule); border-left: 3px solid var(--accent);
+    border-radius: 4px; padding: .9rem 1.1rem; font-size: .92rem; }
+  .detail.error { border-left-color: var(--rubric); }
+  .detail.warn { border-left-color: var(--amber); }
+  .detail h3 { margin: 0 0 .3rem; font-family: var(--mono); font-size: 1rem; }
+  .detail p { margin: .3rem 0; }
+  .detail .units span { font-family: var(--mono); background: var(--panel);
+    border: 1px solid var(--rule); border-radius: 3px; padding: .05rem .35rem; margin-right: .3rem; font-size: .8rem; }
+  .detail .k { font-family: var(--mono); font-size: .68rem; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ink-soft); display: block; margin-top: .6rem; }
+  .sugg { font-family: var(--mono); font-size: .84rem; }
+  .sugg b { color: var(--accent-ink); cursor: pointer; text-decoration: underline dotted; }
+  .legend { font-family: var(--mono); font-size: .68rem; color: var(--ink-soft);
+    display: flex; gap: 1.1rem; flex-wrap: wrap; margin: 0 0 .6rem; }
+  .legend i { font-style: normal; }
+  .foot { margin-top: 2.5rem; padding-top: .9rem; border-top: 1px solid var(--rule);
+    font-family: var(--mono); font-size: .7rem; color: var(--ink-soft); line-height: 1.8; }
+  .foot a { color: var(--accent-ink); }
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">Voynichese-IR toolchain · corpus-trained validator</div>
+  <h1>Voynichese Linter</h1>
+  <p class="sub">Type or paste text in EVA letters. Every word is parsed by the finite automaton
+    induced from all 37,844 manuscript tokens — like a compiler front-end for a language nobody
+    can read. Separate words with spaces or dots.</p>
+
+  <textarea id="in" spellcheck="false" autocapitalize="off"
+    placeholder="e.g.  qokeedy shol daiin"></textarea>
+  <div class="btns">
+    <button id="b-auth">authentic line (f1r.2)</button>
+    <button id="b-bad">corrupted sample</button>
+    <button id="b-clear">clear</button>
+  </div>
+
+  <div id="verdict"></div>
+  <div class="legend">
+    <i style="color:var(--accent-ink)">■ attested</i>
+    <i style="color:var(--accent-ink)">◌ novel but grammatical</i>
+    <i style="color:var(--amber)">■ rare construction</i>
+    <i style="color:var(--rubric)">■ syntax error</i>
+  </div>
+  <div id="chips" class="chips"></div>
+  <div id="detail"></div>
+
+  <div class="foot">
+    grammar: 267-production DFA over 28 glyph units, trained on the ZL3b transliteration ·
+    coverage 96.9% of the manuscript · "attested" = occurs ≥2× in the corpus ·
+    companion to the <a href="https://claude.ai/code/artifact/7767824f-2ce0-4616-b1c4-1349a9298b86">Voynichese-IR specification</a>
+  </div>
+</div>
+
+<script>
+const G = {"meta":{"corpus":"ZL3b","tokens":37448,"types":8240,"minEdge":15},"units":["ckh","cth","cph","cfh","ch","sh","eee","ee","iii","ii","k","t","p","f","q","d","l","r","s","n","m","g","x","a","o","y","e","i"],"edges":{"^":{"f":119,"y":1798,"a":2051,"sh":3120,"cth":456,"k":1253,"s":1258,"ckh":172,"o":8362,"ch":5859,"d":3458,"r":519,"cph":118,"cfh":32,"t":1010,"e":55,"p":539,"l":1440,"q":5312,"i":1,"ee":39,"iii":1,"m":12,"n":3,"eee":31,"g":15,"x":20,"ii":5},"f":{"a":76,"o":59,"ch":183,"$":27,"y":25,"sh":16,"d":2,"s":1,"ee":1},"a":{"ch":7,"l":3087,"r":3331,"t":11,"ii":4085,"i":2388,"s":87,"n":116,"m":776,"iii":131,"$":73,"o":9,"g":21,"d":53,"p":7,"y":12,"k":36,"cph":1,"sh":8,"a":5,"x":1,"e":4,"ckh":3,"ee":3,"f":1,"cth":2},"ch":{"y":969,"t":77,"e":4258,"o":2588,"d":828,"a":478,"ee":738,"s":96,"i":3,"k":159,"cth":132,"r":17,"ckh":238,"p":32,"$":26,"eee":23,"l":56,"ch":15,"sh":13,"g":6,"cph":26,"f":6,"ii":1,"cfh":11,"x":2},"y":{"s":71,"k":698,"$":14859,"a":24,"d":244,"sh":113,"t":571,"ch":290,"y":47,"p":83,"cph":3,"o":117,"cth":13,"f":24,"ee":2,"ckh":10,"m":3,"l":30,"q":26,"eee":1,"r":15,"e":6,"g":1,"ii":1},"s":{"$":1333,"o":386,"e":40,"y":123,"a":614,"ckh":1,"ch":78,"sh":36,"eee":4,"d":30,"k":19,"s":4,"ee":13,"g":4,"p":2,"i":2,"l":4,"cth":1,"t":1,"q":1,"ii":2,"f":1,"r":1},"k":{"a":3030,"o":773,"y":737,"ch":1037,"sh":208,"$":92,"ee":2001,"e":1754,"eee":180,"d":9,"s":5,"l":31,"g":1,"ii":6,"i":3,"r":1},"l":{"$":5798,"d":487,"o":568,"s":163,"y":510,"k":1054,"ch":741,"sh":313,"a":426,"cth":6,"ee":26,"r":29,"t":100,"cfh":2,"cph":2,"g":15,"f":39,"q":5,"l":28,"e":11,"p":41,"eee":11,"m":4,"x":4,"ckh":2},"r":{"$":5674,"y":269,"e":6,"a":681,"o":388,"i":8,"sh":57,"ch":148,"d":54,"g":6,"ii":6,"s":8,"l":13,"q":3,"r":2,"p":4,"k":16,"eee":5,"ee":1,"t":2,"cfh":1,"n":1,"x":3,"f":1},"t":{"a":1542,"ee":740,"e":1029,"y":475,"ch":963,"o":743,"sh":175,"eee":54,"$":73,"s":2,"d":20,"cfh":1,"l":12,"iii":1,"i":1,"k":1,"ii":1},"ii":{"n":4081,"r":158,"l":14,"s":13,"d":12,"m":11,"o":8,"t":1,"cth":1,"$":2,"y":1,"g":2,"k":5,"ch":2,"e":1,"p":1},"n":{"$":5912,"y":31,"cth":2,"ch":17,"o":50,"s":10,"d":21,"sh":13,"q":1,"l":3,"a":13,"t":1,"g":1,"k":1,"p":1},"sh":{"o":961,"a":143,"e":2078,"y":275,"$":35,"ckh":95,"cth":45,"ee":499,"t":18,"k":49,"ch":13,"f":2,"cph":2,"d":181,"l":10,"cfh":2,"s":17,"eee":13,"sh":2,"r":2,"g":1,"x":2},"o":{"l":5528,"r":2668,"d":2276,"a":259,"ii":201,"t":3826,"s":482,"k":6045,"y":124,"cth":143,"sh":69,"$":1296,"e":164,"i":42,"ch":165,"ckh":186,"ee":167,"n":8,"o":73,"eee":52,"p":595,"m":167,"g":20,"iii":41,"f":150,"q":21,"cph":37,"cfh":14,"x":2},"cth":{"r":2,"a":64,"o":221,"e":169,"i":1,"y":364,"d":28,"l":1,"ee":20,"$":5,"s":3,"eee":2},"e":{"s":156,"$":70,"k":375,"o":2605,"a":356,"y":2118,"ch":134,"t":164,"d":3609,"p":68,"g":12,"cth":68,"sh":39,"ckh":131,"f":36,"cfh":3,"n":2,"r":12,"l":3,"ii":2,"iii":2,"i":2,"cph":6,"m":2},"d":{"y":6840,"a":4110,"$":592,"sh":169,"s":23,"ch":347,"ee":64,"o":500,"k":31,"d":35,"l":81,"g":15,"e":43,"eee":16,"p":9,"t":7,"ckh":4,"cth":2,"r":8,"ii":2,"m":2,"x":1,"i":1,"iii":1},"ckh":{"a":33,"e":225,"y":447,"o":93,"d":33,"ch":2,"ee":19,"eee":1,"s":4,"$":2,"i":1},"i":{"r":584,"a":2,"sh":4,"n":1701,"o":5,"l":35,"m":44,"$":6,"e":2,"g":6,"s":24,"t":4,"ee":2,"d":9,"p":5,"k":10,"f":2,"y":6,"x":1,"ch":4},"ee":{"y":1737,"s":209,"g":13,"o":689,"n":1,"a":93,"k":89,"m":2,"d":1373,"ch":32,"t":34,"cth":4,"$":26,"f":8,"p":10,"r":2,"ckh":11,"l":5,"sh":15,"i":2},"cph":{"a":20,"o":51,"e":63,"y":44,"ch":1,"ee":8,"k":1,"d":7,"eee":1},"cfh":{"a":6,"o":14,"y":24,"e":14,"d":6,"ee":1,"s":1},"m":{"$":971,"s":2,"g":2,"o":18,"y":10,"ch":5,"sh":2,"a":7,"m":1,"d":7},"p":{"sh":73,"y":69,"o":236,"ch":750,"a":201,"$":35,"d":30,"e":2,"eee":2,"s":2},"iii":{"n":164,"l":4,"d":3,"r":2,"i":1,"y":1,"k":1,"$":1},"q":{"o":5254,"k":18,"e":43,"y":8,"d":1,"ch":4,"s":3,"ckh":7,"$":1,"cth":5,"a":7,"eee":4,"ee":11,"f":1,"p":1,"cph":1},"eee":{"s":55,"y":184,"e":8,"o":39,"$":2,"d":85,"k":6,"t":6,"a":5,"g":4,"p":2,"r":3,"ch":1},"g":{"$":131,"o":3,"d":1,"s":1,"k":1,"ii":1,"y":1,"r":1,"a":4,"m":1},"x":{"$":16,"o":8,"a":8,"y":3,"d":1}},"lexicon":{"ykal":10,"ar":389,"shol":175,"shory":5,"y":293,"kor":26,"sholdy":8,"sory":2,"ckhar":3,"or":376,"kair":12,"chtaiin":3,"shar":31,"cthar":17,"dan":14,"sheky":33,"ykaiin":45,"shod":10,"cthes":2,"daraiin":2,"sy":23,"soiin":19,"oteey":138,"oteos":25,"daiin":793,"okaiin":211,"okan":7,"sair":29,"chear":49,"cthaiin":8,"cphar":4,"cfhaiin":2,"odar":24,"cy":2,"cphoy":2,"sh":22,"s":306,"yshey":12,"shody":49,"otchol":27,"chocthy":17,"os":32,"chy":143,"dain":190,"chor":198,"kos":2,"shos":9,"cfhol":4,"teody":11,"ydain":3,"ols":19,"cphey":9,"ytain":12,"shoshy":2,"es":2,"oksho":5,"oteol":36,"shodain":4,"shoy":2,"ckhey":27,"kodaiin":3,"cphy":11,"cthey":45,"sho":116,"oldain":3,"d":61,"oiin":35,"chol":378,"odaiin":63,"chodain":5,"chdy":136,"okain":137,"cthy":96,"shckhey":11,"r":167,"char":81,"shey":269,"kol":38,"chal":46,"kshy":7,"kchy":34,"chodaiin":42,"ycho":4,"tchey":22,"chekain":8,"sheo":48,"pshol":4,"yto":5,"she":25,"dar":298,"ain":109,"dchar":2,"okaiir":7,"chey":347,"cthols":2,"shok":5,"otol":78,"daiiin":20,"cpho":2,"shaiin":20,"cha":3,"ro":9,"cthal":8,"shear":23,"kaiin":79,"cho":72,"shoaiin":4,"okol":74,"far":3,"cthol":54,"ycheey":19,"okeey":177,"oky":85,"okchey":32,"dal":229,"dcheo":5,"koshey":2,"ok":6,"keey":55,"chtor":2,"chok":5,"choty":38,"chotey":8,"dchaiin":5,"chydaiin":4,"olo":4,"l":186,"cfhar":2,"am":82,"yteey":27,"okodar":3,"chody":88,"da":7,"ckhy":34,"dol":103,"chokeo":4,"dair":104,"chokody":2,"tody":9,"otoaiin":2,"choky":40,"ctho":17,"lol":37,"qo":52,"ol":551,"choees":2,"cheol":170,"ykol":10,"do":14,"kechy":7,"shor":91,"ky":29,"darshol":2,"dchor":25,"o":191,"tcho":8,"chotchey":4,"pol":19,"chodar":12,"ypchol":3,"cto":4,"ychor":16,"saiin":119,"dchy":26,"qoy":6,"olsheey":7,"dls":2,"sheey":147,"qokey":106,"ykody":2,"yky":16,"qoky":137,"cholaiin":4,"keol":21,"ychain":3,"dalor":7,"shan":4,"ckhor":9,"cthor":40,"yor":3,"an":4,"chety":21,"chyky":3,"sal":47,"ykeey":54,"chcthy":80,"kooiin":2,"cheo":75,"pchor":12,"otaiin":149,"odain":17,"shty":4,"kcho":8,"qotcho":9,"loeees":2,"otchy":39,"lshy":3,"cholo":2,"cheor":94,"kchor":20,"shy":87,"dor":65,"tchor":22,"chan":11,"qoteeey":3,"chr":8,"cheaiin":3,"qopal":2,"ycheor":8,"dam":81,"cham":17,"ochor":6,"schey":6,"qokol":97,"cthom":5,"qodaiin":42,"chom":13,"shom":4,"ysheor":3,"otchody":3,"ydar":5,"pcheol":11,"sols":3,"sheol":107,"qokchor":8,"octhy":8,"qokeey":307,"qot":13,"qokody":8,"qokshey":8,"cheody":88,"qodair":3,"qokeom":2,"okeom":4,"yteody":12,"sam":12,"shodaiin":23,"qopchor":2,"qopol":6,"opchol":5,"otchor":14,"qoeor":2,"qoteol":11,"aiin":495,"cphor":5,"sha":2,"ckhol":21,"ykoaiin":2,"oly":51,"daiidy":6,"qoteeol":5,"okeeor":9,"okor":34,"okom":2,"okai":2,"qodar":12,"ees":5,"eey":6,"kcheol":6,"okal":148,"ychear":3,"otchal":2,"chodaly":3,"otcham":4,"ykchy":18,"chckhol":4,"okeol":62,"ochos":2,"daiim":3,"okary":11,"chodair":2,"ytchy":15,"shkaiin":5,"qokchy":67,"yty":21,"chky":16,"sheam":2,"keam":2,"shtchy":3,"chaiin":45,"shain":9,"qotchol":13,"pydaiin":2,"qotchy":60,"dy":229,"tydy":2,"shytchy":2,"qotaiin":75,"cpholdy":2,"tchy":28,"odal":17,"cphaiin":6,"sheor":47,"qoty":83,"ksheo":5,"kchoy":2,"chopchy":5,"aram":11,"qokshy":9,"qocthy":8,"choteol":3,"ytchoy":2,"shokchy":8,"cphody":2,"torchy":2,"sheeor":6,"chokchy":14,"otor":36,"cthory":2,"cheog":2,"shoky":7,"okeody":34,"chokeody":5,"kcheor":4,"qotol":44,"ody":42,"ochody":2,"key":15,"kchody":4,"oaiin":23,"oar":13,"olsy":2,"ochey":7,"okey":64,"qokaiin":265,"qoaiin":21,"otan":3,"qotchody":3,"otain":94,"sheody":48,"cholols":2,"qotcheo":4,"qoeeey":7,"qotoeey":2,"k":16,"ytchey":10,"chols":4,"dchol":18,"ytor":14,"qotor":26,"shees":9,"ykoiin":3,"taiin":44,"cheotol":2,"chotaiin":10,"foar":2,"cholor":4,"cphol":12,"chckhy":135,"kar":58,"kshor":2,"ytaiin":38,"tar":42,"okoiin":8,"ytaly":5,"al":253,"ckham":3,"ychol":10,"pchar":4,"ckhaiin":3,"chory":9,"ctheod":3,"od":8,"chokaiin":15,"qocthol":2,"yodaiin":2,"ysho":4,"sar":77,"qoor":10,"oees":11,"cheas":2,"odaiiin":5,"kchey":21,"qoair":3,"shckhy":56,"tchody":9,"chocthhy":2,"ychos":3,"qokom":2,"oeeo":2,"qokchod":3,"kchdy":18,"lor":39,"otam":47,"m":11,"ytchos":2,"qokam":25,"qokor":31,"chockhy":20,"ochy":4,"ckhal":3,"ches":40,"kchos":2,"fchodaiin":2,"qoos":2,"dcheey":12,"keo":9,"cheodaiin":13,"qokcho":11,"daiinychey":2,"choaiin":7,"chotchy":10,"qokechy":13,"choiin":13,"chochy":4,"kchod":3,"chain":19,"qopchy":13,"otshol":2,"chcphhy":3,"dykchy":2,"chkeey":13,"ty":19,"cheey":185,"oeear":4,"dchodaiin":2,"tcheey":6,"sheod":10,"sheodaiin":5,"qos":3,"cheeody":13,"qotchey":18,"keeo":10,"daiir":25,"chof":2,"cheeey":9,"sol":59,"choto":2,"choor":2,"dcho":3,"pcheey":3,"dsheey":8,"sholdaiin":2,"chot":4,"kshey":6,"lody":3,"cholal":3,"dchey":16,"ychey":14,"chsey":4,"qokar":154,"cky":3,"okar":132,"cheain":2,"kam":8,"schol":4,"saim":2,"opydaiin":3,"sheaiin":8,"chykchy":3,"cty":3,"qody":17,"cheal":30,"dshol":4,"chary":5,"etaiin":2,"chotain":4,"ry":11,"pchy":2,"sorain":2,"rol":20,"otchar":4,"otorchy":3,"cheeky":25,"raiin":64,"choly":16,"orchey":2,"okchody":6,"toiin":2,"qotod":2,"ram":12,"chokcho":2,"otar":144,"sor":47,"ot":15,"tchol":17,"ocho":2,"oraiin":33,"chkor":3,"opy":9,"qofol":2,"chkaiin":18,"dyoty":3,"ykey":5,"ytey":9,"tch":2,"oty":109,"toldy":2,"ypchy":3,"odol":2,"choy":9,"ksheody":5,"tor":22,"chyty":4,"kchol":24,"pchocthy":3,"octhody":4,"chorchy":2,"pchodol":2,"kom":3,"chty":10,"doiir":7,"dychy":2,"qokchol":15,"kchaiin":4,"qotchor":11,"kaiiin":4,"cfhy":7,"paiin":7,"otydy":4,"sain":61,"dsho":7,"shoiin":6,"shcthhy":4,"shcthy":32,"qotoiin":2,"cheky":64,"tshol":6,"qodor":2,"dod":2,"odl":4,"ykchor":5,"okchol":12,"choldy":10,"qoteey":42,"ksho":8,"torshor":2,"opchy":13,"opchor":5,"shkchy":2,"ydal":3,"oeees":6,"ykor":7,"ytshy":3,"qodchy":2,"tshy":3,"dpchy":2,"okchy":26,"okchor":17,"doaiin":2,"oldy":26,"doiin":11,"daldy":20,"oko":5,"chodal":7,"qokod":5,"cthody":16,"okos":7,"okshy":10,"qocky":2,"otal":126,"pcho":4,"soiiin":6,"ydaiin":17,"olchy":9,"olol":18,"dalo":3,"oir":2,"ockhy":12,"otcho":5,"soshy":2,"cheos":37,"sody":4,"koiin":5,"chod":8,"shoty":6,"dchokchy":4,"keor":7,"sodaiin":3,"ykeody":14,"ypchor":3,"ychy":3,"yk":8,"dytchy":2,"ykshy":3,"ds":2,"n":3,"oy":6,"dydy":4,"dshy":8,"dardy":2,"chokshor":2,"tshor":4,"koly":2,"ko":4,"okear":9,"shocthy":11,"tol":43,"sdain":2,"ctholy":4,"chckhhy":7,"chl":27,"tcheor":3,"dom":6,"daky":2,"orshy":2,"oro":6,"okeor":19,"qotchod":2,"ytchor":8,"kan":2,"cthoiin":2,"qopchey":10,"orom":3,"otey":59,"otody":22,"sheal":18,"ykair":7,"chs":15,"dyky":4,"toaiin":3,"dalchy":3,"schy":2,"shotchy":2,"toror":2,"daly":30,"fchol":2,"dl":19,"chcthody":3,"chotol":8,"ch":8,"chkar":10,"dairin":3,"chcfhhy":3,"chkchy":4,"daram":9,"chog":2,"opydy":2,"dody":5,"ydair":2,"ckhody":4,"qodam":3,"okchom":2,"qor":21,"olaiin":51,"tsho":5,"qof":2,"qokcheor":2,"soy":2,"das":4,"dcheor":4,"chotom":2,"keeor":6,"cthodal":2,"oldaiin":9,"olcheol":7,"okeeey":27,"choldaiin":3,"ycheol":11,"qokcheo":2,"ctheol":10,"chckhey":30,"ykeor":5,"okeeol":14,"qoain":6,"cheeor":16,"eees":8,"oal":3,"sholor":2,"shecthy":20,"cpheor":4,"cheeol":9,"ctheey":15,"ykchol":6,"om":22,"okchal":3,"dychol":2,"chlol":2,"ytol":12,"chcthal":2,"g":13,"dchal":3,"qoeees":3,"ykcho":4,"qol":138,"qokeees":3,"ykar":33,"daror":3,"ykam":5,"yko":2,"qotshy":5,"chordy":2,"dyty":3,"qokorar":2,"yshor":3,"qok":14,"shdaiin":4,"cthyd":2,"octhor":2,"opchey":29,"py":2,"darom":3,"toy":3,"ddor":2,"otch":3,"dais":2,"ytar":23,"ey":2,"odaiir":2,"chodchy":4,"qochy":2,"tcheodal":2,"daral":4,"ochol":4,"teey":21,"otolchey":2,"shosaiin":4,"qokchey":27,"qocphy":2,"pchodaiin":5,"chetody":2,"qoteeody":6,"tshey":9,"otchey":33,"okoy":3,"qopy":6,"sos":5,"checthy":30,"tolshy":2,"chcphy":10,"doiiin":3,"sheoy":4,"tey":13,"keody":21,"shd":8,"shokaiin":4,"ety":6,"ypchey":5,"qopcheody":2,"cthain":4,"qocthey":4,"qokoiin":6,"qotcheol":3,"qokeol":49,"dady":2,"fcho":2,"yteol":5,"deey":6,"chotshol":2,"todaiin":9,"lchol":3,"olshy":4,"okoly":3,"ocphy":3,"dykaiin":3,"ofchy":4,"doroiin":2,"oldor":2,"dsheor":2,"cphal":2,"ctheo":5,"oldam":5,"otoldy":9,"qockhy":17,"ofchar":2,"qod":7,"otchaiin":2,"okshor":2,"ytal":13,"dory":4,"fcholdy":2,"ololdy":2,"to":2,"chk":2,"qokoldy":2,"olchar":2,"sdal":2,"dshe":2,"dydar":2,"ykain":11,"qotchar":3,"otshy":4,"oldar":6,"chees":37,"kshol":2,"oiinol":2,"cheeb":3,"por":8,"opchar":2,"qotar":64,"oeeeos":2,"chtar":3,"qoear":2,"qokain":277,"chcth":2,"sham":6,"okeal":12,"sshey":6,"yol":2,"tchodar":2,"okcho":8,"okam":31,"tchar":3,"olom":3,"okodaiin":2,"oeeey":4,"odor":8,"cheeodam":2,"chsky":3,"chkain":12,"sheear":3,"dchckhy":2,"qotcheaiin":2,"otaiir":2,"dshey":11,"chokeey":11,"dshor":12,"chkey":7,"ypchedy":10,"chedy":501,"ytedy":20,"ls":13,"cthedy":12,"olchedy":38,"qokedy":269,"odam":6,"aldy":12,"shedy":431,"eedy":5,"rchedy":10,"p":7,"dalchedy":5,"qokeedy":303,"qoteedar":3,"dchdy":9,"okedy":116,"okeedy":107,"sheos":13,"pchedar":11,"air":81,"ypchdy":5,"shdy":43,"chekedy":4,"otedy":161,"alys":2,"pchdar":4,"opar":11,"ofchdy":5,"okchdy":27,"saldy":3,"okedor":3,"okeo":19,"chekaiin":10,"qoteedy":77,"qotedy":89,"opchedy":50,"toeedy":2,"yteedy":27,"pchedy":36,"tchedy":34,"okeeos":6,"cheeos":7,"ysaiin":4,"okcheey":6,"ory":15,"ysheey":8,"okeshy":3,"t":14,"kchal":2,"keeod":3,"shotchey":2,"shes":14,"chos":37,"cheokeey":6,"soly":3,"pchodar":2,"chocphy":3,"ldy":23,"dly":2,"chtol":4,"shockhy":5,"daiinshol":2,"ytchol":3,"shepchy":3,"qokchody":2,"qotshey":2,"pchol":6,"oiir":7,"c":6,"chep":5,"cheod":4,"chetchy":4,"dary":21,"oltchy":2,"cholody":4,"chokor":5,"fcheody":3,"chorain":3,"qoko":6,"qop":5,"soin":5,"choko":2,"scheo":2,"rchey":8,"chokchaiin":2,"chocthey":4,"chepchy":4,"checkhy":47,"chkol":3,"cheoldy":4,"qokeeor":8,"chokol":4,"sheoldy":3,"otcheor":2,"qofchedy":9,"shee":13,"qokees":7,"shekeey":6,"chekey":7,"lo":18,"keeol":14,"sheeody":4,"qokeor":21,"cheda":2,"checkhey":11,"ykeedy":27,"qokeody":33,"sheeo":11,"shcthey":5,"olsheol":3,"okaiiin":7,"yches":2,"chedaiin":39,"qoekedy":2,"ykedy":18,"dals":7,"okedam":3,"oteor":12,"podair":2,"sheedy":83,"oteedy":103,"als":4,"ockhey":9,"okeeo":20,"keeody":12,"keedy":62,"ykeeo":7,"shedal":11,"okees":17,"lkedy":26,"chedar":34,"oked":3,"ockhedy":7,"otas":3,"ykeos":3,"pcheeody":2,"chedal":26,"cheef":2,"alaiin":8,"opal":9,"ary":20,"chee":2,"ksheey":2,"lchey":49,"okeos":9,"choar":4,"ckheos":3,"cheam":5,"schor":3,"ytsho":2,"chokeol":4,"kcheodaiin":2,"dydain":2,"teor":3,"shal":16,"odan":2,"daar":2,"otchedy":33,"ytchedy":10,"okaldy":7,"qokaldy":10,"laiin":14,"chdal":18,"chekeedy":4,"aiiin":46,"cheedy":58,"pair":4,"shekal":3,"kchedy":21,"chekar":10,"cheekaiin":2,"tokar":2,"tchdy":14,"ycheo":11,"tshdy":5,"shefchdy":2,"shckhdy":3,"oltedy":6,"shkair":2,"lcho":7,"lodaiin":4,"okaly":17,"oram":11,"olar":17,"chdain":8,"chd":5,"chetey":6,"aiir":29,"qokchdy":51,"as":11,"tam":6,"ykchdy":7,"tcheo":5,"ykeo":3,"kechdy":4,"qokal":195,"chcthedy":6,"chefchy":3,"qopchdy":16,"chcthdy":7,"dychedy":2,"chckhdy":13,"chdaiin":17,"olchdy":10,"tchdaiin":3,"chekal":11,"qokedar":8,"chechey":2,"lr":10,"chedain":19,"olchdaiin":2,"kedy":47,"ysheos":2,"choraiin":3,"chdar":25,"lsheody":3,"kal":26,"shs":3,"tedy":40,"kain":42,"qokeeaiin":2,"shet":3,"lchal":6,"olor":28,"qokchaiin":2,"chckhor":2,"chkaly":2,"chokeeo":2,"qorain":4,"oral":12,"podaiir":2,"yd":2,"sotaiin":2,"dydaiin":2,"dys":3,"chtain":4,"otod":2,"ytody":7,"otoly":7,"ykchody":2,"qoto":4,"yokor":2,"choror":3,"cheoky":8,"qokoiiin":2,"daiinody":2,"qotal":58,"ytoiin":2,"okshey":9,"chko":2,"chochor":2,"shotol":3,"okeea":2,"oteeol":8,"keeey":10,"tedo":2,"orain":14,"ofy":2,"kaly":2,"olchey":25,"shekshey":2,"qolain":3,"qokalchdy":2,"qokeedar":6,"eeedy":7,"aly":25,"pchdaiin":3,"dchdar":2,"ydy":6,"lchedy":116,"fchedy":9,"okair":19,"ykeols":2,"dshdy":4,"olkaiin":31,"chdam":10,"qolkain":5,"cholkal":3,"olky":22,"olkedaiin":2,"ytodaiin":3,"okody":15,"shky":13,"oto":8,"chek":5,"sarol":4,"shekam":2,"cheodal":7,"pchey":7,"olkedy":26,"opches":2,"okas":4,"a":9,"okolchy":3,"chekody":3,"okoldy":6,"qokchd":5,"dag":3,"lshedy":40,"yaiin":6,"dg":2,"olcheey":9,"toar":2,"pchedain":2,"chefaiin":2,"todar":3,"taraiin":2,"solaiin":2,"qoeedaiin":4,"pchody":6,"pchdy":10,"schedy":7,"aithy":4,"toees":2,"olfchedy":4,"chetar":5,"ofair":2,"arody":11,"opchd":2,"qotchedy":25,"alshey":4,"ycheoky":3,"shekchy":4,"cthhy":4,"dchedy":26,"polchedy":7,"chkedy":5,"chekol":4,"qekchdy":3,"ykeod":2,"pcheody":5,"dshedy":34,"shekey":5,"ykeeody":11,"keoy":2,"oleeol":2,"sheols":2,"oteodar":6,"oteody":39,"ykeeol":8,"ckhdy":3,"olkeeo":4,"lkol":4,"ofaiin":3,"otcheey":3,"pchear":2,"solkaiin":2,"chotar":11,"chotor":4,"kary":5,"shotaiin":2,"yshol":2,"darchy":2,"choeky":2,"qopor":4,"shot":2,"otshey":8,"sholy":3,"qocho":2,"chtchy":4,"otoy":4,"chetaiin":3,"sodal":2,"cpheo":4,"rchy":2,"aral":18,"chokey":7,"odeey":2,"eeody":2,"chcphedy":4,"ypar":5,"otchdy":28,"arar":8,"kalchdy":2,"cholky":4,"qotaly":5,"qotody":11,"kshdy":4,"opchdy":20,"kedar":4,"qoiiin":4,"sheeeky":2,"pshdar":2,"shed":19,"yfchdy":2,"otary":6,"tshed":2,"kedydy":2,"choteey":9,"chckhhhy":2,"doly":6,"sheet":4,"arodl":2,"lkeo":3,"araiin":10,"teedy":15,"qocthedy":3,"qokchedy":40,"otedol":2,"qokedal":3,"okedal":9,"pchdol":2,"ytshedy":2,"ochedy":9,"ytchdy":8,"olos":2,"aldar":2,"daldar":2,"chepy":7,"ckhedy":3,"okedar":7,"olkey":13,"oteod":2,"qolkeey":5,"kaldy":3,"oair":3,"ykchey":5,"ofchey":3,"oain":11,"tsheody":2,"lkeees":2,"lsho":2,"teol":16,"lchor":4,"shaikhy":2,"opchal":3,"ykeol":13,"okchar":4,"ytchody":3,"lchar":3,"daldaiin":3,"dail":2,"cheg":3,"oaiir":3,"osaiin":7,"sheckhy":33,"dalshedy":3,"tshedar":2,"qotsheod":2,"dytedy":2,"dsheol":9,"cthdy":6,"kees":2,"fchdy":3,"chkal":12,"qokdy":4,"olaiir":2,"pchdair":5,"shep":2,"sheockhy":2,"akaiin":2,"lain":4,"pody":2,"lshed":3,"yfchey":3,"ytair":4,"chotal":8,"kaiir":2,"ched":18,"chtedy":2,"daim":10,"tolshey":2,"chokchol":4,"chokain":10,"kchdal":2,"olshey":13,"so":5,"shokeey":3,"tchod":2,"daiiny":3,"keechy":3,"tedain":4,"oteodaiin":8,"qoteo":5,"chetedy":4,"cheockhy":10,"octhey":5,"cholkar":3,"lkeedy":37,"oteoly":2,"los":5,"ykeeedy":4,"ypair":3,"alchey":6,"olkeeey":11,"oteed":7,"lkeey":39,"tolkain":2,"otees":12,"chckhedy":11,"loldy":2,"ytam":11,"chdor":9,"ykeedal":2,"sary":6,"choshy":2,"qopchar":2,"cheoraiin":3,"qodain":10,"chotshy":2,"dodar":2,"qotan":2,"sheees":3,"sheoty":2,"podaiin":5,"tcheol":6,"chokan":2,"chods":2,"f":10,"e":7,"qoteees":2,"sheeod":2,"rcheey":5,"dchog":2,"chcthey":6,"chokaly":2,"olkair":5,"ockhody":2,"alol":8,"qokas":3,"keodaiin":3,"olkeedy":45,"okchedy":24,"sheekar":2,"shedain":11,"ald":4,"ldar":5,"ofar":7,"qokaly":14,"pochedy":2,"dalol":7,"ykeeey":6,"tair":12,"qekaiin":2,"tedaiin":3,"qotchdy":23,"dairam":3,"opchear":2,"ckheody":5,"tcheody":6,"qockhey":18,"eeckhy":2,"tchodaiin":3,"ckheey":10,"cheeal":3,"dshody":2,"qodal":7,"cheodar":4,"shodol":3,"ctheody":5,"qokcheody":3,"olkeeody":6,"cheodain":8,"ykoldy":2,"koldal":2,"oteees":3,"qotam":12,"shedaiin":13,"chokam":3,"daig":2,"dchom":2,"oor":2,"ctheor":4,"cpheodar":3,"ckheol":5,"cheokor":2,"sodar":4,"otos":5,"orol":12,"kshody":2,"octheody":2,"ychocthy":2,"otsho":2,"shodal":3,"qopchol":6,"okeodain":2,"ckhos":3,"ckho":2,"koldy":7,"pcheodar":4,"chpal":2,"oloiin":4,"yair":2,"aim":6,"yckhey":2,"aldam":2,"alchy":2,"qofair":2,"okchd":6,"olkam":11,"tchedar":2,"xar":2,"odas":2,"cpheody":2,"qokeeody":16,"kag":2,"oiiin":13,"lchdal":2,"qokeeey":27,"qool":4,"sheokey":3,"pchal":3,"oror":9,"cheoar":4,"olkeechy":3,"chokchey":3,"korchy":3,"tchoky":2,"kcheey":4,"qokcheey":2,"chorol":3,"cheop":2,"cheotey":3,"dchos":3,"cheocthy":4,"okeeody":14,"daiis":2,"qokedam":2,"qcthhy":3,"dairal":5,"v":8,"opaiin":15,"karody":2,"x":11,"lkeeol":3,"teodar":3,"otodal":3,"oteeody":12,"olkeedal":2,"otaly":17,"tal":25,"shaly":2,"cheoly":5,"alam":11,"qoar":8,"chepchey":3,"otalal":4,"orar":8,"shoar":3,"sharam":2,"okalal":5,"qotyshey":2,"dalchdy":5,"darar":2,"chaly":5,"dalar":6,"todal":3,"qotey":22,"otalar":2,"tcheos":2,"sheain":3,"olkeol":7,"osal":4,"chotam":4,"oteeos":14,"otalor":4,"cheekey":6,"oteeoaly":2,"alkar":5,"kshar":2,"yteor":3,"dalal":6,"shokar":3,"okalody":3,"cheom":8,"alom":4,"qokalor":3,"otaldy":7,"taly":3,"oekeody":2,"skaiin":3,"shokal":5,"ykeeshy":2,"dalam":6,"ykaly":6,"chokal":6,"ypal":2,"opaldaiin":2,"qotair":5,"alor":9,"qotain":60,"qokair":21,"fchey":2,"alar":5,"salal":2,"qolaiin":4,"chockhey":5,"olaly":3,"oreeey":2,"qoeear":3,"ckhhy":4,"qoal":5,"cheockhey":2,"alal":7,"chodol":2,"qokeal":3,"okeeam":2,"okalchy":3,"olain":12,"sheoltey":2,"aldaiin":3,"okeoly":4,"qokeos":6,"shekar":2,"polal":2,"qokeeos":2,"shokey":4,"olkeey":38,"otair":25,"otaim":2,"shety":9,"fol":3,"sheek":4,"cheoteey":2,"dalom":3,"cheot":2,"rary":4,"saly":4,"pdaiin":3,"qokshd":3,"ykshedy":2,"chady":2,"cheeo":19,"chekeey":6,"qotedal":3,"ykady":2,"qopaiin":7,"dalky":2,"sheodal":4,"qokaiir":3,"lkar":31,"ih":2,"odair":4,"dairody":3,"chekchy":5,"kcheody":5,"psheody":5,"tosheo":2,"saiir":4,"sshedy":5,"sheocthy":3,"ld":3,"dcheol":7,"tolchedy":2,"sheeol":13,"ldaiin":4,"okalchedy":2,"kody":5,"cphedy":8,"lkeol":5,"ykees":6,"sheefy":2,"teodal":3,"okshedy":3,"sheeky":15,"okechdy":4,"okeedal":4,"chepar":3,"chckhd":3,"dokal":2,"shedar":8,"teeodaiin":2,"qoekeey":3,"oeteody":2,"dalaiin":3,"chpar":2,"deedy":5,"oekaiin":3,"otodaiin":5,"oshey":6,"shchey":3,"sotey":2,"oteo":15,"oteesy":2,"sheokeey":3,"oteodal":6,"otoky":3,"dalary":2,"chocfhy":2,"saral":4,"ydam":2,"yteos":3,"og":2,"ycheody":3,"qokeochy":2,"oeeos":2,"qokoaiin":2,"ay":2,"soaiin":3,"orsheey":2,"okechey":2,"yteeey":5,"keechey":2,"oekeey":2,"dcheeos":2,"opcheey":5,"chso":3,"chedaly":2,"osheey":2,"otechy":4,"okeeodaiin":2,"chteey":3,"qokeeedy":5,"cheeteey":4,"chpor":2,"qocheey":3,"ror":14,"otcheody":3,"otochedy":3,"dolchedy":2,"tsheeor":2,"ykeechy":2,"chesy":2,"qockheol":2,"cheoal":2,"cheorol":2,"shdar":10,"okeeeody":2,"okoaiin":2,"opcheody":3,"qokolchey":2,"che":3,"okolshy":2,"dcheeody":2,"qety":2,"cheoty":5,"chokar":7,"qockhhy":2,"qoeeo":3,"qoeey":16,"okolchey":2,"ycheeo":8,"otairos":2,"darol":3,"teeody":6,"dcheedy":4,"sheetey":2,"shkeey":3,"shsdy":2,"oteeys":2,"qokeechy":6,"chokeeey":2,"chotedy":2,"teeos":2,"oteotey":4,"opain":3,"oteeor":4,"oteodain":2,"okeodar":4,"ykeeos":3,"aloly":2,"ral":18,"oteeodar":2,"cheyky":2,"chsdy":3,"okeod":5,"oteeo":10,"otaldal":3,"otoar":3,"qoteor":5,"oteeal":2,"okeodal":3,"ytory":2,"okolar":3,"alair":2,"dasy":2,"opolaiin":2,"aloees":2,"shocthhy":2,"okechy":5,"chcthhy":3,"okeear":4,"lal":7,"oaral":2,"sheedal":2,"shopcho":2,"opaiir":2,"cheocphey":3,"sheeey":5,"okeedaly":2,"alain":4,"sheodaly":2,"sheeos":2,"oteeam":3,"alody":5,"oteedar":2,"aildy":3,"teodaiin":2,"qokeeol":9,"okeolol":2,"okeeedy":8,"ockhhy":2,"chpchy":4,"okeodaly":2,"arol":8,"cheols":3,"arom":3,"okalar":2,"shldy":2,"olcheor":3,"okochey":2,"shetey":2,"cheolor":3,"alo":4,"otear":5,"qoeeeo":2,"qokeodal":2,"chas":2,"okeolaiin":2,"okarar":2,"keodar":2,"sheoly":2,"doteey":2,"otedar":13,"opalal":2,"otchs":2,"okechedy":5,"cheokey":3,"chalal":2,"okeees":2,"oteoldy":2,"oteal":6,"oltar":2,"otshedy":10,"chokeedy":3,"otes":5,"otaraiin":2,"ofaral":2,"daraly":2,"cheteey":3,"chopchedy":2,"olteey":2,"cheesy":2,"keoly":2,"toly":2,"ytedar":5,"eeey":5,"orary":2,"alshy":2,"otaram":5,"ltain":2,"olkar":19,"lshey":16,"qokan":8,"olyshey":2,"olshedy":21,"qokshedy":11,"oqokain":2,"chedyor":2,"dyqokeedy":2,"shtol":2,"lkaiin":48,"kalol":2,"qoked":7,"polshy":3,"ltedy":5,"sheety":8,"qokechdy":3,"yshedy":7,"rshedy":6,"sokeedy":2,"saino":2,"loly":6,"qokeed":17,"rshey":2,"taral":2,"qokydy":2,"olshed":2,"lshdy":3,"dalkar":3,"lchy":9,"qoted":5,"olkchy":3,"dedy":2,"olkain":34,"qolshey":2,"solshey":2,"qolchedy":11,"chealy":3,"lsheckhy":2,"qokear":6,"ycheedy":7,"alchedy":4,"solkedy":2,"olkol":3,"lpchdy":2,"lchdy":15,"qoly":6,"ly":10,"chcphdy":2,"aiiny":2,"solchedy":6,"qopchedy":31,"qokeeo":18,"lkain":34,"solshedy":4,"sheckhey":4,"qotes":2,"qeeey":3,"okeed":3,"qolchey":11,"qolal":2,"cheolchey":2,"rain":21,"lkey":7,"ollchy":2,"pshedy":3,"yksheol":2,"lcheey":13,"otalam":2,"oin":9,"otarain":2,"rorol":3,"lsheedy":7,"chedor":3,"chdol":2,"polarar":2,"cholkeeey":2,"otedor":2,"alchl":2,"qoteed":3,"qotees":4,"qoeeedy":3,"roiin":4,"shecphy":3,"shedam":2,"lteedy":6,"oleeedy":2,"checthey":3,"qockhedy":4,"qodeey":2,"qolkeedy":8,"lky":19,"shl":3,"lcheedy":9,"lsheey":6,"psheoldy":2,"lar":8,"shtal":2,"tain":9,"shckhedy":6,"ychees":2,"lshety":2,"qeedy":2,"qoeedy":19,"chchky":2,"san":3,"soral":3,"tolchd":2,"qodeedy":3,"qolcheedy":2,"sheed":5,"qeey":3,"sheckhedy":3,"sheoky":7,"qolchy":2,"olcheedy":3,"lom":4,"sa":2,"qoteeedy":3,"cheety":3,"solkeey":3,"chcphey":3,"lod":2,"oloky":2,"qopshedy":4,"qolsheedy":2,"qy":2,"shdal":4,"qolky":4,"rsheedy":3,"lam":4,"rar":15,"salchedy":4,"fchor":2,"qotas":2,"dalchey":2,"ldol":2,"tshedy":10,"ychedy":11,"dsheedy":5,"qolshedy":2,"lkchey":8,"okalo":2,"qckhedy":2,"shekedy":2,"dalshdy":4,"yched":2,"olkchdy":4,"qeedar":2,"chckhal":4,"tchal":2,"ofchedy":6,"solkeedy":3,"okaral":4,"lcheckhy":3,"dkedy":2,"chedol":5,"lcheol":8,"qar":2,"olkal":13,"qofcheol":2,"op":2,"okalor":2,"olshdy":4,"teeol":4,"oltal":2,"shek":8,"opcholor":2,"sheekeey":3,"qolshy":2,"qokl":9,"ykchedy":7,"shoikhy":4,"ldain":2,"qotshdy":3,"kshedy":5,"aror":6,"sheyky":2,"oikhy":3,"otory":3,"cholchey":2,"polaiin":8,"olteedy":2,"kas":2,"qochey":6,"qotshedy":3,"oteeedy":3,"polkeey":2,"otshdy":3,"oltchey":2,"lkchedy":15,"cheory":2,"lcheam":3,"cheokain":3,"qolar":2,"oeedy":6,"ksheol":2,"ocheey":3,"keeedy":7,"sheckhdy":2,"okolo":2,"opor":6,"otalshedy":2,"fshedy":2,"solkain":2,"chetain":5,"chtal":6,"oltain":2,"okalol":3,"solchey":3,"rcheky":3,"qokady":2,"shekaiin":3,"lteey":2,"loiin":4,"qotl":2,"lkl":6,"oithy":2,"dolshedy":2,"dkshey":2,"oltydy":2,"sheyr":2,"okiin":2,"olal":6,"qcthy":2,"shkain":2,"olpchedy":4,"alched":2,"dshees":2,"qokechedy":4,"polchdy":2,"opol":3,"olam":5,"par":6,"lchl":2,"sheckhal":2,"qokeedal":3,"oshedy":2,"lched":6,"qekeey":3,"qotedor":2,"deeedy":2,"polched":2,"qokeoy":2,"sheeal":2,"lchedar":2,"rag":2,"darary":2,"otechdy":5,"otedal":5,"lokam":2,"cholkaiin":5,"lchedam":2,"rches":2,"oll":2,"kechey":2,"lpchedy":6,"lchs":2,"chkeedy":3,"pchedal":5,"qockhol":8,"qcphhedy":2,"cheedar":5,"lkeed":3,"shechy":2,"opshedy":2,"qotedaiin":4,"sheekchy":2,"raly":3,"chepchedy":2,"qotedar":3,"qokolchedy":2,"cheeaiin":2,"sheeckhy":2,"opoly":2,"schdy":3,"keed":3,"daraldy":2,"otedaiin":5,"poiin":3,"dolor":3,"yoiin":2,"tarar":2,"otedam":4,"qopar":5,"kchdar":2,"opchsd":2,"cheolkeedy":2,"pdar":2,"shdair":2,"qopcheedy":2,"tdain":2,"lkor":3,"dlar":2,"qokeeodaiin":3,"cheokaiin":3,"checphey":2,"pcheo":3,"qocphdy":2,"dairar":2,"tedair":2,"qofchdy":3,"ysheedy":5,"otarar":5,"odeedy":2,"otodar":5,"fcheey":4,"qotchd":4,"airol":3,"otdar":2,"darchedy":2,"orarol":2,"daldal":2,"okod":2,"olaiiin":2,"osar":2,"ykodar":3,"ofchedaiin":2,"otoraiin":2,"qokeo":10,"tched":2,"oteedaiin":4,"opchees":2,"oedy":3,"otedain":3,"opchedaiin":5,"rody":3,"okady":2,"otchdaiin":2,"otl":2,"opchdar":2,"opchdain":2,"olkchedy":5,"osain":3,"okedaiin":4,"opchody":3,"okeechy":2,"qopcher":2,"chdair":2,"scheor":2,"yteeody":7,"orchedy":2,"qockheey":3,"lcheody":2,"oleey":3,"keear":4,"sarar":2,"qckhy":2,"chcfhy":2,"olkchey":3,"opdaiin":3,"lkeeor":2,"olteody":2,"kshd":2,"soraiin":7,"qoteody":11,"oeey":5,"qoedy":5,"alky":3,"lfchy":2,"sheokaiin":2,"sail":2,"qopcheey":4,"lkaiiin":2,"alkam":4,"qoka":2,"teo":2,"lchody":2,"olpchey":2,"odeeey":2,"qotchedar":2,"chalkar":2,"shocfhy":2,"dcheody":2,"dsheody":2,"pchedaiin":4,"olfchey":2,"cheedaiin":5,"lkam":5,"yteeo":3,"cheodor":2,"tos":3,"pcheos":3,"shkeody":2,"saraiin":3,"cthos":2,"tockhy":3,"dcheos":3,"sheom":3,"qoekol":2,"oldal":2,"ofal":2,"cheokal":2,"olcheody":2,"cheokam":2,"yfolaiin":2,"ysheod":2,"ykeeor":4,"keeodaiin":2,"qkol":2,"qoaithy":2,"opcheor":2,"cholkeedy":4,"oeeor":3,"kolches":2,"opcheol":5,"cheok":2,"loiiin":2,"okeoy":2,"otalsy":2,"cfheol":2,"qoeol":4,"chkam":2,"qekor":2,"okols":2,"chool":2,"cfhey":2,"shockhey":3,"du":2,"cthog":2,"qofchol":2,"ckheo":2,"qokeod":6,"sokeey":2,"qoeeor":3,"rodaiin":3,"keeos":3,"okeeom":2,"tchos":2,"pcheor":5,"oleees":2,"cthhhy":2,"okeam":2,"keeeol":2,"okcheody":2,"okcheor":2,"cheodam":2,"olkees":3,"qoteeo":5,"otalaiin":2,"opary":3,"chckhaiin":3,"qotarain":2,"toky":2,"okchaiin":2,"tchdor":2,"olkor":3,"alod":2,"okaraiin":2,"tshod":2,"odaly":2,"chctham":2,"podar":2,"kshed":2,"qokeeod":2,"cpheol":2,"chkchol":3,"salo":2,"oekey":2,"ykhey":3,"doldam":2,"okolaiin":2,"oraro":2,"olchor":2,"sheocphy":2,"chockhar":2,"cheokeol":2,"sheockhey":3,"oleeey":2,"chosaiin":2,"chchy":2,"pcholy":2,"olcho":2,"pshodaiin":2,"qokshdy":3,"olsho":2,"airam":2,"ykeear":2,"qoeeol":2,"qoeeody":3,"loty":4,"ota":2,"shekain":3,"lkeeody":4,"chdaly":2,"shalky":2,"lokeedy":2,"ssheey":2,"lshor":2,"okeeshy":2,"tokain":2,"oteaiin":2,"olcheeey":2,"lkchdy":5,"poly":2,"okeedar":2,"qkain":2,"aky":3,"chedam":6,"lkeody":4,"odr":2,"oeeal":2,"opair":4,"airod":2,"rl":2,"lkechedy":3,"ysheeody":2,"qokcheedy":2,"olcheo":2,"qocheol":2,"qotechy":2,"opam":3,"olched":2,"opcheedy":3,"cheekain":3,"ychedaiin":2,"oeedaiin":2,"qotched":5,"lcheod":2,"oteeey":7,"dlchd":2,"ais":2,"qotcheedy":3,"qokedaiin":3,"lcheo":3,"cheed":3,"lkair":4,"qoeeda":2,"sairy":3,"daiindy":2,"dyteey":2,"oleedy":2,"paiir":2,"airody":2,"teedar":3,"airal":2,"chdedy":2,"laiiin":2,"kechedy":3,"ail":5,"qoedaiin":3,"opched":2,"olkeeol":2,"ksheeol":2,"olr":4,"qolkaiin":2,"orair":3,"lkaiir":2,"otchod":2,"qoek":2,"kl":2,"alkaiin":4,"qopcheo":2,"poar":2,"olkeeedy":2,"qoiin":3,"lchg":2,"qokedain":4,"ltal":3,"lkshedy":4,"chlar":2,"chlal":2,"kairam":2,"lkshey":2,"daiiral":2,"sheeodar":2,"charam":2,"shkar":2,"dairy":2,"lchdaiin":2,"charain":2,"okarol":2,"kcheeor":2,"chokchedy":2,"aiinal":2,"otaral":2,"lldy":2,"pal":2,"ycheain":2,"kcheo":2,"pcholky":2,"kalkal":2,"aikhy":2,"chtl":2,"lkal":5,"alkain":5,"chokedy":4,"raraiin":4,"lty":2,"lkeeey":7,"lkchy":2,"lcheor":2,"poraiin":2,"lkeeo":2,"lkedal":2,"qaiin":2,"tedam":3,"chedl":3,"shchy":2,"alkeedy":2,"keedal":2,"okeedain":2,"lokeey":2,"dalkedy":2,"arain":4,"okedain":3,"qokeeal":2,"sholkeedy":2,"raram":3,"rair":4,"lcheal":2,"lkeeedy":4,"checkhed":2,"lkedain":2,"qokeear":2,"cheokedy":2,"pchdam":2,"aiy":2,"lfchedy":2,"oteain":2,"qokeain":2,"qoteal":2,"polar":2,"tarol":2,"teeedy":4,"oteedal":2,"olkeear":2,"octhdy":2,"pchodain":3,"ychedal":2,"polor":2,"tchedor":2,"checkhol":2,"okchdar":2,"ycheod":2,"cheoaiin":2,"shkchedy":2,"dsheo":2,"qokaram":2,"okchedam":2,"qokeedaiin":2,"qokeedain":2,"cheedain":2,"ychedar":2,"qolcheey":2,"chotchdy":2,"rodam":2}};
+const MIN_EDGE = 15, RARE_EDGE = 50;
+const rowTotals = {};
+for (const [s, row] of Object.entries(G.edges))
+  rowTotals[s] = Object.values(row).reduce((a, b) => a + b, 0);
+
+const INSIDE_ONLY = { h: 'ch / sh / ckh / cth / cph / cfh', c: 'ch / ckh / cth / cph / cfh' };
+
+function segment(w) {
+  const out = []; let i = 0;
+  outer: while (i < w.length) {
+    for (const u of G.units) if (w.startsWith(u, i)) { out.push(u); i += u.length; continue outer; }
+    return { error: { at: i, char: w[i] } };
+  }
+  return { units: out };
+}
+function expected(state) {
+  const row = G.edges[state] || {};
+  return Object.entries(row).filter(([, n]) => n >= MIN_EDGE)
+    .sort((a, b) => b[1] - a[1]).slice(0, 6)
+    .map(([u, n]) => ({ u: u === '$' ? '(end)' : u, p: (n / rowTotals[state]).toFixed(2) }));
+}
+function editDist(a, b, max) {
+  if (Math.abs(a.length - b.length) > max) return max + 1;
+  const dp = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+  for (let j = 1; j <= b.length; j++) dp[0][j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    let rowMin = Infinity;
+    for (let j = 1; j <= b.length; j++) {
+      dp[i][j] = Math.min(dp[i-1][j] + 1, dp[i][j-1] + 1, dp[i-1][j-1] + (a[i-1] === b[j-1] ? 0 : 1));
+      rowMin = Math.min(rowMin, dp[i][j]);
+    }
+    if (rowMin > max) return max + 1;
+  }
+  return dp[a.length][b.length];
+}
+function suggest(w) {
+  const out = [];
+  for (const [cand, n] of Object.entries(G.lexicon)) {
+    const d = editDist(w, cand, 2);
+    if (d <= 2) out.push({ cand, n, d });
+  }
+  return out.sort((a, b) => a.d - b.d || b.n - a.n).slice(0, 3);
+}
+function lintWord(w) {
+  const res = { word: w };
+  const bad = [...w].find(c => !/[a-z]/.test(c));
+  if (bad) return { ...res, status: 'error',
+    message: `illegal character '${bad}' — only EVA letters a–z are glyphs`, suggestions: [] };
+  const seg = segment(w);
+  if (seg.error) {
+    const ch = seg.error.char;
+    const hint = INSIDE_ONLY[ch]
+      ? `'${ch}' only exists inside the compound glyphs ${INSIDE_ONLY[ch]} — it never stands alone`
+      : `'${ch}' at position ${seg.error.at + 1} is not in the glyph-unit inventory`;
+    return { ...res, status: 'error', message: hint, suggestions: suggest(w) };
+  }
+  res.units = seg.units;
+  let state = '^', bits = 0, rare = null;
+  for (let i = 0; i < seg.units.length; i++) {
+    const u = seg.units[i];
+    const n = (G.edges[state] || {})[u] || 0;
+    if (n < MIN_EDGE) return { ...res, status: 'error',
+      message: state === '^' ? `no Voynich word begins with '${u}'`
+        : `'${u}' cannot follow '${state}' (unit ${i + 1})`,
+      expected: expected(state), suggestions: suggest(w) };
+    if (n < RARE_EDGE && !rare) rare = `${state}→${u}`;
+    bits += -Math.log2(n / rowTotals[state]);
+    state = u;
+  }
+  const endN = (G.edges[state] || {})['$'] || 0;
+  if (endN < MIN_EDGE) return { ...res, status: 'error',
+    message: `a word cannot end after '${state}' — unterminated right edge`,
+    expected: expected(state), suggestions: suggest(w) };
+  bits += -Math.log2(endN / rowTotals[state]);
+  res.bits = (bits / (seg.units.length + 1)).toFixed(2);
+  const att = G.lexicon[w];
+  if (att) { res.status = 'ok'; res.att = att;
+    res.message = `attested ${att}× in the manuscript` + (rare ? ` · rare transition ${rare}` : ''); }
+  else if (rare) { res.status = 'warn';
+    res.message = `grammatical, but uses the rare transition ${rare}`; res.suggestions = suggest(w); }
+  else { res.status = 'novel';
+    res.message = 'grammatical and idiomatic, but never attested — a well-formed new word'; res.suggestions = suggest(w); }
+  return res;
+}
+
+const $ = id => document.getElementById(id);
+let results = [], selected = -1;
+
+function render() {
+  const chips = $('chips'), verdict = $('verdict');
+  chips.innerHTML = '';
+  if (!results.length) { verdict.innerHTML = ''; $('detail').innerHTML = ''; return; }
+  const errs = results.filter(r => r.status === 'error').length;
+  const ok = results.length - errs;
+  verdict.className = 'verdict ' + (errs ? 'bad' : 'good');
+  verdict.innerHTML = errs
+    ? `<b>NOT PROCESSABLE</b><span>${errs} syntax error${errs > 1 ? 's' : ''} in ${results.length} words</span>`
+    : `<b>PROCESSABLE</b><span>${ok} word${ok > 1 ? 's' : ''} accepted by the grammar</span>`;
+  results.forEach((r, i) => {
+    const c = document.createElement('button');
+    c.className = 'chip ' + r.status + (i === selected ? ' sel' : '');
+    c.textContent = r.word;
+    c.onclick = () => { selected = i; render(); };
+    chips.appendChild(c);
+  });
+  renderDetail();
+}
+function renderDetail() {
+  const d = $('detail');
+  if (selected < 0 || !results[selected]) { d.innerHTML = results.length
+    ? '<p class="sub">Click a word for its parse report.</p>' : ''; return; }
+  const r = results[selected];
+  let h = `<div class="detail ${r.status}"><h3>${r.word}</h3><p>${r.message}</p>`;
+  if (r.units) h += `<span class="k">glyph units</span><p class="units">` +
+    r.units.map(u => `<span>${u}</span>`).join('') + `</p>`;
+  if (r.bits) h += `<span class="k">surprisal</span><p>${r.bits} bits/unit ${+r.bits < 3 ? '(very idiomatic)' : +r.bits < 4.2 ? '(typical)' : '(unusual)'}</p>`;
+  if (r.expected) h += `<span class="k">legal continuations at failure point</span><p class="sugg">` +
+    r.expected.map(e => `${e.u}&thinsp;(${e.p})`).join(' &middot; ') + `</p>`;
+  if (r.suggestions && r.suggestions.length) h += `<span class="k">did you mean</span><p class="sugg">` +
+    r.suggestions.map(s => `<b data-w="${s.cand}">${s.cand}</b>&thinsp;(${s.n}×)`).join(' &middot; ') + `</p>`;
+  h += '</div>';
+  d.innerHTML = h;
+  d.querySelectorAll('b[data-w]').forEach(b => b.onclick = () => {
+    const w = results[selected].word;
+    $('in').value = $('in').value.replace(new RegExp('\\b' + w + '\\b'), b.dataset.w);
+    run();
+  });
+}
+function run() {
+  const words = $('in').value.toLowerCase().split(/[\s.,]+/).filter(Boolean);
+  results = words.map(lintWord);
+  if (selected >= results.length) selected = -1;
+  const firstErr = results.findIndex(r => r.status === 'error');
+  if (firstErr >= 0 && (selected < 0 || results[selected].status !== 'error')) selected = firstErr;
+  render();
+}
+$('in').addEventListener('input', run);
+$('b-auth').onclick = () => { $('in').value = 'sory ckhar or y kair chtaiin shar ase cthar cthar dan'; selected = -1; run(); };
+$('b-bad').onclick = () => { $('in').value = 'qokeedy hol daiinq chq okeody'; selected = -1; run(); };
+$('b-clear').onclick = () => { $('in').value = ''; selected = -1; run(); };
+</script>

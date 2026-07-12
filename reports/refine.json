@@ -1,0 +1,162 @@
+{
+  "slotGrammarFixed": {
+    "typeCoverage": 0.8554,
+    "tokenCoverage": 0.9665,
+    "frequentFailures": []
+  },
+  "supraWordSyntax": {
+    "pairs": 29910,
+    "classBigramMI_bits": 0.1097,
+    "shuffledMI_bits": 0.0143
+  },
+  "qConditioning": {
+    "after-Fr(r/l/s)": 0.065,
+    "after-Fn(n/m)": 0.079,
+    "after-Fy(y)": 0.281,
+    "after-other": 0.107
+  },
+  "astSample": "build/ast_f1r.json written",
+  "productions": 169,
+  "topProductions": [
+    {
+      "rule": "y -> $",
+      "count": 13846,
+      "prob": 0.862,
+      "stability": 1,
+      "confidence": 1
+    },
+    {
+      "rule": "^ -> o",
+      "count": 6973,
+      "prob": 0.205,
+      "stability": 1,
+      "confidence": 0.98
+    },
+    {
+      "rule": "d -> y",
+      "count": 6404,
+      "prob": 0.541,
+      "stability": 1,
+      "confidence": 0.98
+    },
+    {
+      "rule": "n -> $",
+      "count": 5632,
+      "prob": 0.973,
+      "stability": 1,
+      "confidence": 0.97
+    },
+    {
+      "rule": "o -> k",
+      "count": 5543,
+      "prob": 0.249,
+      "stability": 1,
+      "confidence": 0.97
+    },
+    {
+      "rule": "^ -> ch",
+      "count": 5490,
+      "prob": 0.161,
+      "stability": 1,
+      "confidence": 0.97
+    },
+    {
+      "rule": "l -> $",
+      "count": 5315,
+      "prob": 0.562,
+      "stability": 1,
+      "confidence": 0.97
+    },
+    {
+      "rule": "^ -> q",
+      "count": 5271,
+      "prob": 0.155,
+      "stability": 1,
+      "confidence": 0.97
+    },
+    {
+      "rule": "q -> o",
+      "count": 5207,
+      "prob": 0.977,
+      "stability": 1,
+      "confidence": 0.96
+    },
+    {
+      "rule": "o -> l",
+      "count": 5122,
+      "prob": 0.23,
+      "stability": 1,
+      "confidence": 0.96
+    },
+    {
+      "rule": "r -> $",
+      "count": 5112,
+      "prob": 0.784,
+      "stability": 1,
+      "confidence": 0.96
+    },
+    {
+      "rule": "ch -> e",
+      "count": 3985,
+      "prob": 0.394,
+      "stability": 1,
+      "confidence": 0.95
+    },
+    {
+      "rule": "ii -> n",
+      "count": 3850,
+      "prob": 0.95,
+      "stability": 1,
+      "confidence": 0.95
+    },
+    {
+      "rule": "a -> ii",
+      "count": 3839,
+      "prob": 0.3,
+      "stability": 1,
+      "confidence": 0.95
+    },
+    {
+      "rule": "d -> a",
+      "count": 3678,
+      "prob": 0.311,
+      "stability": 1,
+      "confidence": 0.95
+    },
+    {
+      "rule": "e -> d",
+      "count": 3445,
+      "prob": 0.378,
+      "stability": 1,
+      "confidence": 0.94
+    },
+    {
+      "rule": "o -> t",
+      "count": 3206,
+      "prob": 0.144,
+      "stability": 1,
+      "confidence": 0.94
+    },
+    {
+      "rule": "^ -> d",
+      "count": 3144,
+      "prob": 0.092,
+      "stability": 1,
+      "confidence": 0.94
+    },
+    {
+      "rule": "^ -> sh",
+      "count": 2987,
+      "prob": 0.088,
+      "stability": 1,
+      "confidence": 0.93
+    },
+    {
+      "rule": "k -> a",
+      "count": 2870,
+      "prob": 0.313,
+      "stability": 1,
+      "confidence": 0.93
+    }
+  ]
+}

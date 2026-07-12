@@ -1,0 +1,507 @@
+{
+  "unitProfile": [
+    {
+      "u": "q",
+      "n": 5401,
+      "meanPos": 0.004,
+      "initRate": 0.989,
+      "finRate": 0
+    },
+    {
+      "u": "sh",
+      "n": 4482,
+      "meanPos": 0.138,
+      "initRate": 0.703,
+      "finRate": 0.008
+    },
+    {
+      "u": "cph",
+      "n": 209,
+      "meanPos": 0.2,
+      "initRate": 0.574,
+      "finRate": 0
+    },
+    {
+      "u": "ch",
+      "n": 10922,
+      "meanPos": 0.214,
+      "initRate": 0.544,
+      "finRate": 0.002
+    },
+    {
+      "u": "p",
+      "n": 1431,
+      "meanPos": 0.223,
+      "initRate": 0.377,
+      "finRate": 0.024
+    },
+    {
+      "u": "cth",
+      "n": 911,
+      "meanPos": 0.257,
+      "initRate": 0.513,
+      "finRate": 0.005
+    },
+    {
+      "u": "c",
+      "n": 129,
+      "meanPos": 0.28,
+      "initRate": 0.457,
+      "finRate": 0.062
+    },
+    {
+      "u": "cfh",
+      "n": 72,
+      "meanPos": 0.295,
+      "initRate": 0.444,
+      "finRate": 0
+    },
+    {
+      "u": "f",
+      "n": 408,
+      "meanPos": 0.306,
+      "initRate": 0.294,
+      "finRate": 0.071
+    },
+    {
+      "u": "t",
+      "n": 5927,
+      "meanPos": 0.307,
+      "initRate": 0.172,
+      "finRate": 0.012
+    },
+    {
+      "u": "o",
+      "n": 25067,
+      "meanPos": 0.313,
+      "initRate": 0.336,
+      "finRate": 0.052
+    },
+    {
+      "u": "k",
+      "n": 9996,
+      "meanPos": 0.35,
+      "initRate": 0.126,
+      "finRate": 0.009
+    },
+    {
+      "u": "ckh",
+      "n": 892,
+      "meanPos": 0.403,
+      "initRate": 0.202,
+      "finRate": 0.002
+    },
+    {
+      "u": "a",
+      "n": 14371,
+      "meanPos": 0.468,
+      "initRate": 0.144,
+      "finRate": 0.005
+    },
+    {
+      "u": "x",
+      "n": 39,
+      "meanPos": 0.468,
+      "initRate": 0.538,
+      "finRate": 0.462
+    },
+    {
+      "u": "e",
+      "n": 10064,
+      "meanPos": 0.476,
+      "initRate": 0.006,
+      "finRate": 0.007
+    },
+    {
+      "u": "d",
+      "n": 12979,
+      "meanPos": 0.502,
+      "initRate": 0.268,
+      "finRate": 0.046
+    },
+    {
+      "u": "s",
+      "n": 2727,
+      "meanPos": 0.519,
+      "initRate": 0.464,
+      "finRate": 0.494
+    },
+    {
+      "u": "eee",
+      "n": 409,
+      "meanPos": 0.537,
+      "initRate": 0.076,
+      "finRate": 0.005
+    },
+    {
+      "u": "ee",
+      "n": 4378,
+      "meanPos": 0.554,
+      "initRate": 0.009,
+      "finRate": 0.006
+    },
+    {
+      "u": "iii",
+      "n": 182,
+      "meanPos": 0.613,
+      "initRate": 0.005,
+      "finRate": 0.005
+    },
+    {
+      "u": "h",
+      "n": 225,
+      "meanPos": 0.64,
+      "initRate": 0,
+      "finRate": 0.022
+    },
+    {
+      "u": "l",
+      "n": 10420,
+      "meanPos": 0.688,
+      "initRate": 0.138,
+      "finRate": 0.557
+    },
+    {
+      "u": "i",
+      "n": 2547,
+      "meanPos": 0.689,
+      "initRate": 0.005,
+      "finRate": 0.003
+    },
+    {
+      "u": "ii",
+      "n": 4332,
+      "meanPos": 0.695,
+      "initRate": 0.001,
+      "finRate": 0
+    },
+    {
+      "u": "r",
+      "n": 7404,
+      "meanPos": 0.847,
+      "initRate": 0.071,
+      "finRate": 0.77
+    },
+    {
+      "u": "y",
+      "n": 17538,
+      "meanPos": 0.875,
+      "initRate": 0.103,
+      "finRate": 0.861
+    },
+    {
+      "u": "g",
+      "n": 146,
+      "meanPos": 0.899,
+      "initRate": 0.103,
+      "finRate": 0.904
+    },
+    {
+      "u": "m",
+      "n": 1033,
+      "meanPos": 0.968,
+      "initRate": 0.012,
+      "finRate": 0.945
+    },
+    {
+      "u": "n",
+      "n": 6096,
+      "meanPos": 0.987,
+      "initRate": 0,
+      "finRate": 0.972
+    }
+  ],
+  "automaton": {
+    "edgesAll": 594,
+    "edgesPruned": 267,
+    "coverageTokensPruned": 0.9688,
+    "coverageTypesPruned": 0.8725
+  },
+  "mdl": {
+    "unigram": {
+      "bitsPerToken": 21.05,
+      "modelBits": 888
+    },
+    "bigram": {
+      "bitsPerToken": 12.86,
+      "modelBits": 14256
+    },
+    "trigram": {
+      "bitsPerToken": 13.88,
+      "modelBits": 81072
+    }
+  },
+  "slotGrammar": {
+    "typeCoverage": 0.8058,
+    "tokenCoverage": 0.9489,
+    "ambiguousTypes": 6465,
+    "ambiguityExamples": [
+      [
+        "ar",
+        [
+          " a+r   ",
+          " a   r",
+          "   a r"
+        ]
+      ],
+      [
+        "shol",
+        [
+          " sh+o  l ",
+          " sh+o   l",
+          " sh  o+l "
+        ]
+      ],
+      [
+        "y",
+        [
+          " y   ",
+          "    y"
+        ]
+      ],
+      [
+        "or",
+        [
+          " o+r   ",
+          " o   r",
+          "   o r"
+        ]
+      ],
+      [
+        "oteey",
+        [
+          " o+t  ee y",
+          " o t ee y",
+          " o  t+ee y"
+        ]
+      ]
+    ],
+    "frequentFailures": [
+      [
+        "checkhy",
+        47
+      ],
+      [
+        "sheckhy",
+        33
+      ],
+      [
+        "checthy",
+        30
+      ]
+    ]
+  },
+  "FIRST": [
+    [
+      "o",
+      0.225
+    ],
+    [
+      "ch",
+      0.159
+    ],
+    [
+      "q",
+      0.143
+    ],
+    [
+      "d",
+      0.093
+    ],
+    [
+      "sh",
+      0.084
+    ],
+    [
+      "a",
+      0.055
+    ],
+    [
+      "y",
+      0.049
+    ],
+    [
+      "l",
+      0.039
+    ],
+    [
+      "s",
+      0.034
+    ],
+    [
+      "k",
+      0.034
+    ],
+    [
+      "t",
+      0.027
+    ],
+    [
+      "p",
+      0.014
+    ],
+    [
+      "r",
+      0.014
+    ],
+    [
+      "cth",
+      0.012
+    ],
+    [
+      "ckh",
+      0.005
+    ],
+    [
+      "f",
+      0.003
+    ],
+    [
+      "cph",
+      0.003
+    ],
+    [
+      "c",
+      0.002
+    ],
+    [
+      "e",
+      0.002
+    ],
+    [
+      "ee",
+      0.001
+    ],
+    [
+      "cfh",
+      0.001
+    ],
+    [
+      "eee",
+      0.001
+    ],
+    [
+      "x",
+      0.001
+    ],
+    [
+      "g",
+      0
+    ]
+  ],
+  "LAST": [
+    [
+      "y",
+      0.404
+    ],
+    [
+      "n",
+      0.159
+    ],
+    [
+      "l",
+      0.155
+    ],
+    [
+      "r",
+      0.153
+    ],
+    [
+      "s",
+      0.036
+    ],
+    [
+      "o",
+      0.035
+    ],
+    [
+      "m",
+      0.026
+    ],
+    [
+      "d",
+      0.016
+    ],
+    [
+      "g",
+      0.004
+    ],
+    [
+      "k",
+      0.002
+    ],
+    [
+      "a",
+      0.002
+    ],
+    [
+      "t",
+      0.002
+    ],
+    [
+      "e",
+      0.002
+    ],
+    [
+      "sh",
+      0.001
+    ],
+    [
+      "p",
+      0.001
+    ],
+    [
+      "f",
+      0.001
+    ],
+    [
+      "ch",
+      0.001
+    ],
+    [
+      "ee",
+      0.001
+    ],
+    [
+      "x",
+      0
+    ]
+  ],
+  "generativePrecision": 0.753,
+  "crossSectionCoverage": {
+    "herbal": {
+      "stars-recipes": 0.936,
+      "biological": 0.957,
+      "pharmaceutical": 0.922,
+      "text-only": 0.942
+    },
+    "stars-recipes": {
+      "herbal": 0.887,
+      "biological": 0.956,
+      "pharmaceutical": 0.911,
+      "text-only": 0.935
+    },
+    "biological": {
+      "herbal": 0.792,
+      "stars-recipes": 0.862,
+      "pharmaceutical": 0.78,
+      "text-only": 0.863
+    },
+    "pharmaceutical": {
+      "herbal": 0.685,
+      "stars-recipes": 0.631,
+      "biological": 0.571,
+      "text-only": 0.655
+    },
+    "text-only": {
+      "herbal": 0.721,
+      "stars-recipes": 0.806,
+      "biological": 0.852,
+      "pharmaceutical": 0.713
+    }
+  },
+  "crossLanguage": {
+    "A->B": 0.923,
+    "B->A": 0.942
+  }
+}

@@ -1,0 +1,298 @@
+<title>Voynichese-IR — Formal Language Specification</title>
+<style>
+  :root {
+    --paper: #faf8f4; --ink: #2b2320; --ink-soft: #6b6259; --rule: #d9d2c4;
+    --accent: #4f7a5b; --accent-ink: #3d6249; --rubric: #a04432;
+    --panel: #f1ede4; --panel-ink: #33402f; --chip: #e6efe8;
+    --mono: ui-monospace, "Cascadia Code", Consolas, Menlo, monospace;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Charter, Georgia, serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --paper:#1c1917; --ink:#e8e2d6; --ink-soft:#a89e90; --rule:#3a342c;
+      --accent:#7fae8c; --accent-ink:#8fbc9b; --rubric:#d08a6f;
+      --panel:#26221d; --panel-ink:#c9d8c8; --chip:#2a332b; }
+  }
+  :root[data-theme="dark"] { --paper:#1c1917; --ink:#e8e2d6; --ink-soft:#a89e90; --rule:#3a342c;
+      --accent:#7fae8c; --accent-ink:#8fbc9b; --rubric:#d08a6f;
+      --panel:#26221d; --panel-ink:#c9d8c8; --chip:#2a332b; }
+  :root[data-theme="light"] { --paper:#faf8f4; --ink:#2b2320; --ink-soft:#6b6259; --rule:#d9d2c4;
+      --accent:#4f7a5b; --accent-ink:#3d6249; --rubric:#a04432;
+      --panel:#f1ede4; --panel-ink:#33402f; --chip:#e6efe8; }
+
+  html { background: var(--paper); }
+  body { font-family: var(--serif); color: var(--ink); margin: 0; line-height: 1.55; }
+  .wrap { max-width: 46rem; margin: 0 auto; padding: 2.5rem 1.25rem 5rem; }
+
+  .eyebrow { font-family: var(--mono); font-size: .72rem; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--accent-ink); }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.7rem); line-height: 1.12; margin: .35rem 0 .4rem;
+    font-weight: 600; text-wrap: balance; }
+  .sub { color: var(--ink-soft); margin: 0 0 2rem; max-width: 38rem; }
+  .sub em { color: var(--ink); font-style: italic; }
+
+  .stats { display: flex; flex-wrap: wrap; gap: .6rem 2rem; padding: 1rem 0;
+    border-block: 1px solid var(--rule); margin-bottom: 2.2rem; }
+  .stat b { display: block; font-size: 1.35rem; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .stat span { font-family: var(--mono); font-size: .68rem; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ink-soft); }
+
+  h2 { font-size: 1.28rem; margin: 2.8rem 0 .6rem; font-weight: 600; text-wrap: balance; }
+  h2 .n { font-family: var(--mono); font-size: .78rem; color: var(--rubric);
+    vertical-align: .35em; margin-right: .5rem; letter-spacing: .05em; }
+  p { margin: .6rem 0; }
+  .note { color: var(--ink-soft); font-size: .92rem; }
+
+  table { border-collapse: collapse; font-family: var(--mono); font-size: .78rem;
+    font-variant-numeric: tabular-nums; margin: .8rem 0; width: 100%; }
+  .tbl { overflow-x: auto; }
+  th { text-align: left; font-weight: 600; color: var(--ink-soft); text-transform: uppercase;
+    font-size: .66rem; letter-spacing: .08em; padding: .35rem .7rem .35rem 0; border-bottom: 1px solid var(--rule); }
+  td { padding: .32rem .7rem .32rem 0; border-bottom: 1px solid var(--rule); }
+  td.hi { color: var(--accent-ink); font-weight: 600; }
+  td.rb { color: var(--rubric); font-weight: 600; }
+
+  pre { background: var(--panel); color: var(--panel-ink); font-family: var(--mono);
+    font-size: .8rem; line-height: 1.6; padding: 1rem 1.1rem; border-radius: 4px;
+    overflow-x: auto; border-left: 3px solid var(--accent); }
+  code { font-family: var(--mono); font-size: .86em; background: var(--panel);
+    padding: .08em .3em; border-radius: 3px; }
+
+  /* hero: slot-position strip */
+  .strip { margin: 0 0 .4rem; }
+  .axis { position: relative; height: 130px; border-bottom: 1px solid var(--rule); }
+  .axis .u { position: absolute; transform: translateX(-50%); font-family: var(--mono);
+    font-size: .72rem; background: var(--chip); color: var(--accent-ink);
+    border: 1px solid var(--rule); border-radius: 3px; padding: .05rem .3rem; white-space: nowrap; }
+  .axis .tick { position: absolute; bottom: -1.4rem; transform: translateX(-50%);
+    font-family: var(--mono); font-size: .66rem; color: var(--ink-soft); }
+  .zones { display: flex; font-family: var(--mono); font-size: .66rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-soft); margin-top: 2rem; text-align: center; }
+  .zones div { border-top: 2px solid var(--accent); padding-top: .3rem; }
+
+  .verdict { border: 1px solid var(--rule); border-radius: 4px; padding: 1.1rem 1.3rem; margin-top: 1rem; }
+  .verdict ol { margin: .4rem 0 0; padding-left: 1.2rem; }
+  .verdict li { margin: .5rem 0; }
+  .verdict b { color: var(--accent-ink); }
+  ul { padding-left: 1.2rem; } li { margin: .3rem 0; }
+  .foot { margin-top: 3.5rem; padding-top: 1rem; border-top: 1px solid var(--rule);
+    font-family: var(--mono); font-size: .72rem; color: var(--ink-soft); line-height: 1.8; }
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">Beinecke MS 408 · ZL3b corpus · no translation attempted</div>
+  <h1>Voynichese-IR: a formal language specification</h1>
+  <p class="sub">The manuscript treated as <em>source code for a lost compiler</em>: corpus normalized,
+    structure recovered, grammar induced, parser built, every production validated across sections.
+    Semantics deliberately out of scope.</p>
+
+  <div class="stats">
+    <div class="stat"><b>227</b><span>pages</span></div>
+    <div class="stat"><b>37,844</b><span>tokens</span></div>
+    <div class="stat"><b>7,650</b><span>word types</span></div>
+    <div class="stat"><b>267</b><span>DFA edges</span></div>
+    <div class="stat"><b>96.9%</b><span>parser coverage</span></div>
+  </div>
+
+  <div class="strip">
+    <div class="eyebrow" style="margin-bottom:1.2rem">The central finding — every glyph unit has a fixed home inside the word (mean normalized position, n ≥ 400)</div>
+    <div class="axis" id="axis"></div>
+    <div class="zones">
+      <div style="width:12%">Q</div>
+      <div style="width:26%">PRE</div>
+      <div style="width:30%">CORE</div>
+      <div style="width:32%">FIN</div>
+    </div>
+  </div>
+  <p class="note">Word-internal order is monotone: <code>q</code> at 0.00, benches at ~0.2, gallows ~0.3,
+    nucleus ~0.5, then <code>l · r · y · m · n</code> stacked against the right edge. Words are walks
+    through a positional template — the signature of a regular language.</p>
+
+  <h2><span class="n">01</span>Corpus normalization</h2>
+  <p>ZL3b transliteration (IVTFF Eva- 2.0) parsed to an intermediate representation:
+    <code>Document → Section → Entry → Block → Line → Word{units, flags}</code>.
+    227 pages, 750 paragraphs, 5,059 lines, 37,844 tokens; 89.4% fully clean
+    (no uncertain glyphs or alternate readings). Uncertain tokens retained in the IR, excluded from statistics.</p>
+
+  <h2><span class="n">02</span>Document hierarchy</h2>
+  <p>Eight sections self-identify by illustration type and carry distinct <em>layout grammars</em> —
+    recovered before reading any glyph:</p>
+  <div class="tbl"><table>
+    <tr><th>section</th><th>pages</th><th>tokens</th><th>blocks/page</th><th>profile</th></tr>
+    <tr><td>herbal</td><td>129</td><td>10,928</td><td>1.9</td><td>short blocks + labels</td></tr>
+    <tr><td>stars-recipes</td><td>25</td><td>11,646</td><td>11.7</td><td>dense block lists</td></tr>
+    <tr><td>biological</td><td>19</td><td>6,327</td><td>5.0</td><td>blocks + label sets</td></tr>
+    <tr><td>pharmaceutical</td><td>16</td><td>2,561</td><td>2.8</td><td>blocks + many labels</td></tr>
+    <tr><td>zodiac</td><td>12</td><td>1,001</td><td class="rb">0</td><td>labels + circular text only</td></tr>
+    <tr><td>cosmological</td><td>11</td><td>2,207</td><td>2.2</td><td>circular / radial loci</td></tr>
+    <tr><td>astronomical</td><td>8</td><td>812</td><td>2.3</td><td>labels + short runs</td></tr>
+    <tr><td>text-only</td><td>7</td><td>2,362</td><td>4.4</td><td>pure prose blocks</td></tr>
+  </table></div>
+
+  <h2><span class="n">03</span>Structural grammar (layout level)</h2>
+  <pre>Document      ::= Section+
+Entry(herbal) ::= Illustration Block{1..5} Label*
+Entry(zodiac) ::= Illustration CircularText Label+
+Entry(stars)  ::= Block{3..18}
+Block         ::= Line+ TerminalLine   ; terminal line mean 6.0 tokens vs 8.7–9.1
+Label         ::= Word                 ; 91% of 703 label loci are one word</pre>
+
+  <h2><span class="n">04</span>Word-shape grammar <span class="note">(glyph identities masked)</span></h2>
+  <ul>
+    <li><b>Block-start rule:</b> paragraph-initial words contain an ascender <b>91.7%</b> vs 51% baseline (n=742) — a BEGIN marker.</li>
+    <li><b>Line-end rule:</b> line-final words end in a descender <b>56.7%</b> vs 41.8% elsewhere.</li>
+    <li>Line-initial words run longer (5.46 vs 5.07 glyphs) and ascender-poor (42%).</li>
+    <li>Shape marginals M 62 / L 20 / S 18%; mild same-shape clustering (S→S 0.26, L→L 0.26).</li>
+  </ul>
+
+  <h2><span class="n">05</span>Token inventory</h2>
+  <p>7,650 types; hapax rate 70.5%; Zipf slope <b>−1.037</b> (near-perfect). Top:
+    <code>daiin</code> 766 · <code>ol</code> 521 · <code>chedy</code> 488 · <code>aiin</code> 451 ·
+    <code>shedy</code> 422 · <code>chol</code> 363. Tokens carry positional syntax:
+    <code>chdy</code> is never line-initial (0/132); <code>sho</code> opens lines at 2.4× baseline.
+    The Currier A/B registers are near-absolute for part of the lexicon —
+    <code>qokeedy</code> (n=303) occurs 0% in A; <code>chor</code> is 86% A against 32% expected.
+    Exact adjacent repetition (<code>daiin daiin</code>) occurs 274 times.</p>
+
+  <h2><span class="n">06</span>Token family graph</h2>
+  <p>Of the 261 types with frequency ≥ 20, <b>249 form a single connected component</b> under
+    edit-distance 1. The lexicon is one dense combinatorial neighborhood — machine-enumeration
+    shape, not natural-vocabulary shape.</p>
+
+  <h2><span class="n">07</span>Glyph inventory &amp; constraints</h2>
+  <p>19 effective symbols. Hard constraints, measured:</p>
+  <div class="tbl"><table>
+    <tr><th>rule</th><th>strength</th><th>rule</th><th>strength</th></tr>
+    <tr><td>q word-initial</td><td class="hi">0.990</td><td>y word-final</td><td class="hi">0.861</td></tr>
+    <tr><td>q → o</td><td class="hi">0.977</td><td>c → h (bench)</td><td class="hi">0.827</td></tr>
+    <tr><td>n word-final</td><td class="hi">0.972</td><td>r word-final</td><td class="hi">0.766</td></tr>
+    <tr><td>ii → n</td><td class="hi">0.950</td><td>h never initial</td><td class="hi">1.000</td></tr>
+    <tr><td>m word-final</td><td class="hi">0.944</td><td>successor entropy of q</td><td>0.21 bits</td></tr>
+  </table></div>
+
+  <h2><span class="n">08</span>Glyph inheritance graph</h2>
+  <pre>GALLOWS  {k t p f} ─┬─ PLATFORMED {ckh cth cph cfh} = bench ∘ gallows (ligature)
+BENCH    ch ────────┴─ PLUMED sh = ch + diacritic     (modifier variant)
+E-SERIES e → ee → eee        (iterated modifier)
+I-SERIES i → ii → iii        (must close with terminal n / r / l / m)
+CLITIC   q                   (word-initial particle, binds o)
+TERMINAL {y n m g r l s d}   (right-edge class)</pre>
+
+  <h2><span class="n">09</span>Morphological grammar</h2>
+  <pre>Word ::= Q? PRE{0..2} CORE{0..5} FIN{0..4}
+
+Q       ::= 'q'
+PRE     ::= d | s | y | o | a | l | r | ch | sh | GALLOWS
+CORE    ::= e | ee | eee | o | a | ch | sh | d | l | GALLOWS
+FIN     ::= i | ii | iii | n | r | l | m | s | d | y | o | a | g | e | ee
+GALLOWS ::= k | t | p | f | ckh | cth | cph | cfh</pre>
+  <p>Coverage: <b>96.65% of tokens</b>, 85.5% of types; no failing type with frequency ≥ 20.</p>
+
+  <h2><span class="n">10</span>Grammar class — MDL verdict</h2>
+  <div class="tbl"><table>
+    <tr><th>model</th><th>bits/token (incl. model)</th><th>params</th></tr>
+    <tr><td>unigram units</td><td>21.05</td><td>37</td></tr>
+    <tr><td class="hi">bigram automaton (regular)</td><td class="hi">12.86</td><td>594</td></tr>
+    <tr><td>trigram</td><td>13.88</td><td>3,378</td></tr>
+  </table></div>
+  <p>The order-1 regular model is MDL-optimal; longer context does not pay for itself.
+    <b>The word language is Regular</b> (star-free, slot-ordered), LL(1)-trivial, PEG-compatible.
+    Above the word: class-bigram mutual information 0.110 bits vs 0.014 shuffled — real but an
+    order of magnitude weaker than word-internal structure. Strongest supra-word rule:
+    P(next word begins <code>q</code> | current ends <code>y</code>) = <b>0.281</b> vs 0.07–0.11 otherwise.
+    No evidence of constituency.</p>
+
+  <h2><span class="n">11</span>Parser specification</h2>
+  <p>Deterministic finite automaton over 30 glyph units; 267 edges (count ≥ 15) recognize
+    <b>96.9%</b> of tokens. FIRST: <code>o</code> .225 · <code>ch</code> .159 · <code>q</code> .143 ·
+    <code>d</code> .093 · <code>sh</code> .084. LAST: <code>y</code> .404 · <code>n</code> .159 ·
+    <code>l</code> .155 · <code>r</code> .153.</p>
+  <p><b>Generative precision 75.3%:</b> three of four random walks through the automaton
+    are attested Voynich words. The recognizer is simultaneously a near-exhaustive generator —
+    <em>the lexicon ≈ the language.</em></p>
+
+  <h2><span class="n">12</span>AST specification</h2>
+  <pre>Document
+ └─ Section (illustration-typed)
+     └─ Entry (page · quire · hand · register A/B)
+         ├─ Block*
+         │   └─ Line+ (is-terminal)
+         │       └─ Word+ (units[], slots{Q,PRE,CORE,FIN})
+         └─ LabelSet* └─ Word</pre>
+  <p class="note">Full parse of folio 1r emitted at <code>build/ast_f1r.json</code>.</p>
+
+  <h2><span class="n">13</span>Ambiguity report</h2>
+  <p>Unit segmentation: deterministic under longest match (<code>h</code> never initial, so bench
+    ligatures cannot conflict). The DFA is conflict-free. The slot grammar <em>written as a CFG</em>
+    is massively ambiguous (6,465 types admit multiple slot assignments) because slot alphabets
+    overlap — the language is unambiguous; that presentation is not. Canonical form: the DFA,
+    slots as leftmost-longest view.</p>
+
+  <h2><span class="n">14</span>Validation</h2>
+  <p>Automaton trained on one section, tested on the others (token coverage):</p>
+  <div class="tbl"><table>
+    <tr><th>train \ test</th><th>herbal</th><th>stars</th><th>bio</th><th>pharma</th><th>text</th></tr>
+    <tr><td>herbal</td><td>—</td><td class="hi">.936</td><td class="hi">.957</td><td class="hi">.922</td><td class="hi">.942</td></tr>
+    <tr><td>stars-recipes</td><td>.887</td><td>—</td><td class="hi">.956</td><td class="hi">.911</td><td class="hi">.935</td></tr>
+    <tr><td>biological</td><td>.792</td><td>.862</td><td>—</td><td>.780</td><td>.863</td></tr>
+  </table></div>
+  <p>Register transfer: A-trained grammar covers <b>92.3%</b> of B tokens; B-trained covers
+    <b>94.2%</b> of A. One morphology governs the whole manuscript across sections, hands and registers.</p>
+
+  <h2><span class="n">15</span>Production confidence</h2>
+  <p>169 productions with count ≥ 50, scored by frequency × cross-section stability
+    (<code>reports/productions.json</code>). Top rules all ≥ 0.93 confidence:
+    <code>y→$</code> 13,846 · <code>^→o</code> 6,973 · <code>d→y</code> 6,404 (p=.54) ·
+    <code>n→$</code> 5,632 (p=.97) · <code>q→o</code> 5,207 (p=.98) · <code>ii→n</code> 3,850 (p=.95).</p>
+
+  <div class="verdict">
+    <div class="eyebrow">Engineering verdict</div>
+    <ol>
+      <li><b>The Word is the statement.</b> Nearly all structure lives inside the token: rigid slot template, ~4 bits/unit of internal constraint against ~0.1 bit of word-order constraint.</li>
+      <li><b>The lexicon is an enumeration, not a vocabulary.</b> 75% of random grammar walks are attested words; frequent types form one edit-1 cluster — an opcode space, not a dictionary.</li>
+      <li><b>Layout is syntax.</b> BEGIN marker (92% ascender), short terminal lines, line-final descenders, one-word labels — the AST was recoverable without reading a glyph.</li>
+      <li><b>Two registers, one language.</b> Currier A and B are disjoint regions of the same word-space under the same grammar.</li>
+      <li><b>Language class: Regular.</b> A complete parser is 267 weighted edges.</li>
+    </ol>
+    <p class="note" style="margin-top:.8rem">Constraint for any future semantic theory: it must reproduce
+      (a) regular slot morphology, (b) lexicon≈language density, (c) weak Markov word order with the q|y coupling,
+      (d) layout-level BEGIN/END marking, (e) the A/B split under one grammar. The measured profile is
+      statistically unlike natural-language lexica and unlike simple substitution of one — both preserve
+      lexical sparsity and word-order information that this corpus does not have.</p>
+  </div>
+
+  <div class="foot">
+    corpus ZL3b (Zandbergen–Landini, 2025-05-13) · pipeline D:\V\voynich-lab (Node.js) ·
+    phases 0–9 per formal-language methodology · semantics deliberately not attempted ·
+    full spec: reports/SPEC.md
+  </div>
+</div>
+
+<script>
+  const units = [
+    ["q",.004],["sh",.138],["cph",.20],["ch",.214],["p",.223],["cth",.257],
+    ["cfh",.295],["f",.306],["t",.307],["o",.313],["k",.35],["ckh",.403],
+    ["a",.468],["e",.476],["d",.502],["s",.519],["ee",.554],["iii",.613],
+    ["l",.688],["ii",.695],["r",.847],["y",.875],["g",.899],["m",.968],["n",.987]
+  ];
+  const ax = document.getElementById('axis');
+  const rows = 5, rowH = 24;
+  const lastX = new Array(rows).fill(-1);
+  units.forEach(([u, x]) => {
+    let r = 0;
+    while (r < rows - 1 && lastX[r] > x - 0.055) r++;
+    lastX[r] = x;
+    const el = document.createElement('div');
+    el.className = 'u';
+    el.textContent = u;
+    el.style.left = (3 + x * 94) + '%';
+    el.style.top = (r * rowH) + 'px';
+    ax.appendChild(el);
+  });
+  [0, .25, .5, .75, 1].forEach(t => {
+    const el = document.createElement('div');
+    el.className = 'tick';
+    el.textContent = t.toFixed(2);
+    el.style.left = (3 + t * 94) + '%';
+    ax.appendChild(el);
+  });
+</script>

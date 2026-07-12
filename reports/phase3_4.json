@@ -1,0 +1,1075 @@
+{
+  "tokens": 34781,
+  "types": 7650,
+  "hapax": 5397,
+  "hapaxRate": 0.705,
+  "zipfSlope": -1.037,
+  "top30": [
+    [
+      "daiin",
+      766
+    ],
+    [
+      "ol",
+      521
+    ],
+    [
+      "chedy",
+      488
+    ],
+    [
+      "aiin",
+      451
+    ],
+    [
+      "shedy",
+      422
+    ],
+    [
+      "chol",
+      363
+    ],
+    [
+      "or",
+      353
+    ],
+    [
+      "chey",
+      333
+    ],
+    [
+      "ar",
+      325
+    ],
+    [
+      "qokeey",
+      303
+    ],
+    [
+      "qokeedy",
+      303
+    ],
+    [
+      "s",
+      279
+    ],
+    [
+      "qokain",
+      277
+    ],
+    [
+      "qokedy",
+      269
+    ],
+    [
+      "dar",
+      266
+    ],
+    [
+      "qokaiin",
+      265
+    ],
+    [
+      "shey",
+      261
+    ],
+    [
+      "y",
+      260
+    ],
+    [
+      "al",
+      211
+    ],
+    [
+      "okaiin",
+      205
+    ],
+    [
+      "dal",
+      205
+    ],
+    [
+      "dy",
+      205
+    ],
+    [
+      "chor",
+      197
+    ],
+    [
+      "qokal",
+      192
+    ],
+    [
+      "dain",
+      187
+    ],
+    [
+      "cheey",
+      176
+    ],
+    [
+      "shol",
+      169
+    ],
+    [
+      "l",
+      169
+    ],
+    [
+      "cheol",
+      162
+    ],
+    [
+      "okeey",
+      158
+    ]
+  ],
+  "posBaseline": {
+    "first": 0.119,
+    "mid": 0.742,
+    "last": 0.118,
+    "label": 0.021
+  },
+  "posPreference": {
+    "ar": {
+      "n": 325,
+      "first": 0.018,
+      "last": 0.08,
+      "label": 0,
+      "paraInit": 0
+    },
+    "shol": {
+      "n": 169,
+      "first": 0.112,
+      "last": 0.024,
+      "label": 0.006,
+      "paraInit": 0.018
+    },
+    "y": {
+      "n": 260,
+      "first": 0.238,
+      "last": 0.138,
+      "label": 0.046,
+      "paraInit": 0
+    },
+    "or": {
+      "n": 353,
+      "first": 0.093,
+      "last": 0.048,
+      "label": 0.003,
+      "paraInit": 0
+    },
+    "oteey": {
+      "n": 105,
+      "first": 0.086,
+      "last": 0.038,
+      "label": 0.019,
+      "paraInit": 0
+    },
+    "daiin": {
+      "n": 766,
+      "first": 0.209,
+      "last": 0.167,
+      "label": 0.001,
+      "paraInit": 0.003
+    },
+    "okaiin": {
+      "n": 205,
+      "first": 0.073,
+      "last": 0.063,
+      "label": 0.02,
+      "paraInit": 0
+    },
+    "s": {
+      "n": 279,
+      "first": 0.057,
+      "last": 0.129,
+      "label": 0.039,
+      "paraInit": 0
+    },
+    "chy": {
+      "n": 128,
+      "first": 0.016,
+      "last": 0.078,
+      "label": 0,
+      "paraInit": 0
+    },
+    "dain": {
+      "n": 187,
+      "first": 0.262,
+      "last": 0.139,
+      "label": 0,
+      "paraInit": 0.011
+    },
+    "chor": {
+      "n": 197,
+      "first": 0.046,
+      "last": 0.036,
+      "label": 0.01,
+      "paraInit": 0
+    },
+    "sho": {
+      "n": 109,
+      "first": 0.284,
+      "last": 0,
+      "label": 0,
+      "paraInit": 0
+    },
+    "chol": {
+      "n": 363,
+      "first": 0.05,
+      "last": 0.008,
+      "label": 0.006,
+      "paraInit": 0.003
+    },
+    "chdy": {
+      "n": 132,
+      "first": 0,
+      "last": 0.129,
+      "label": 0.008,
+      "paraInit": 0
+    },
+    "okain": {
+      "n": 137,
+      "first": 0.058,
+      "last": 0.08,
+      "label": 0.029,
+      "paraInit": 0
+    },
+    "r": {
+      "n": 142,
+      "first": 0.014,
+      "last": 0.056,
+      "label": 0.035,
+      "paraInit": 0.007
+    },
+    "shey": {
+      "n": 261,
+      "first": 0.023,
+      "last": 0.05,
+      "label": 0,
+      "paraInit": 0.004
+    },
+    "dar": {
+      "n": 266,
+      "first": 0.143,
+      "last": 0.162,
+      "label": 0.008,
+      "paraInit": 0.008
+    },
+    "ain": {
+      "n": 106,
+      "first": 0,
+      "last": 0.094,
+      "label": 0.019,
+      "paraInit": 0
+    },
+    "chey": {
+      "n": 333,
+      "first": 0.018,
+      "last": 0.054,
+      "label": 0,
+      "paraInit": 0
+    },
+    "okeey": {
+      "n": 158,
+      "first": 0.082,
+      "last": 0.025,
+      "label": 0.006,
+      "paraInit": 0.006
+    },
+    "dal": {
+      "n": 205,
+      "first": 0.024,
+      "last": 0.234,
+      "label": 0.01,
+      "paraInit": 0
+    },
+    "l": {
+      "n": 169,
+      "first": 0.018,
+      "last": 0.012,
+      "label": 0.036,
+      "paraInit": 0
+    },
+    "ol": {
+      "n": 521,
+      "first": 0.061,
+      "last": 0.079,
+      "label": 0,
+      "paraInit": 0.002
+    },
+    "cheol": {
+      "n": 162,
+      "first": 0.043,
+      "last": 0.031,
+      "label": 0,
+      "paraInit": 0
+    },
+    "o": {
+      "n": 152,
+      "first": 0.125,
+      "last": 0.007,
+      "label": 0.092,
+      "paraInit": 0
+    },
+    "saiin": {
+      "n": 115,
+      "first": 0.487,
+      "last": 0.078,
+      "label": 0.009,
+      "paraInit": 0
+    },
+    "sheey": {
+      "n": 144,
+      "first": 0.028,
+      "last": 0.021,
+      "label": 0.014,
+      "paraInit": 0
+    },
+    "qokey": {
+      "n": 106,
+      "first": 0.094,
+      "last": 0.066,
+      "label": 0,
+      "paraInit": 0
+    },
+    "qoky": {
+      "n": 137,
+      "first": 0.044,
+      "last": 0.212,
+      "label": 0,
+      "paraInit": 0
+    },
+    "otaiin": {
+      "n": 137,
+      "first": 0.029,
+      "last": 0.08,
+      "label": 0,
+      "paraInit": 0
+    },
+    "sheol": {
+      "n": 105,
+      "first": 0.029,
+      "last": 0.038,
+      "label": 0.01,
+      "paraInit": 0
+    },
+    "qokeey": {
+      "n": 303,
+      "first": 0.109,
+      "last": 0.04,
+      "label": 0,
+      "paraInit": 0.007
+    },
+    "aiin": {
+      "n": 451,
+      "first": 0.002,
+      "last": 0.089,
+      "label": 0,
+      "paraInit": 0
+    },
+    "okal": {
+      "n": 133,
+      "first": 0.023,
+      "last": 0.098,
+      "label": 0.015,
+      "paraInit": 0
+    },
+    "dy": {
+      "n": 205,
+      "first": 0.01,
+      "last": 0.424,
+      "label": 0.015,
+      "paraInit": 0
+    },
+    "qokaiin": {
+      "n": 265,
+      "first": 0.109,
+      "last": 0.045,
+      "label": 0,
+      "paraInit": 0
+    },
+    "chckhy": {
+      "n": 130,
+      "first": 0.015,
+      "last": 0.077,
+      "label": 0,
+      "paraInit": 0
+    },
+    "al": {
+      "n": 211,
+      "first": 0.005,
+      "last": 0.133,
+      "label": 0,
+      "paraInit": 0
+    },
+    "cheey": {
+      "n": 176,
+      "first": 0.011,
+      "last": 0.034,
+      "label": 0,
+      "paraInit": 0
+    },
+    "qokar": {
+      "n": 152,
+      "first": 0.046,
+      "last": 0.02,
+      "label": 0,
+      "paraInit": 0
+    },
+    "okar": {
+      "n": 121,
+      "first": 0.05,
+      "last": 0.025,
+      "label": 0.025,
+      "paraInit": 0.017
+    },
+    "otar": {
+      "n": 124,
+      "first": 0.016,
+      "last": 0.048,
+      "label": 0.016,
+      "paraInit": 0
+    },
+    "otal": {
+      "n": 121,
+      "first": 0.008,
+      "last": 0.074,
+      "label": 0.025,
+      "paraInit": 0
+    },
+    "qol": {
+      "n": 138,
+      "first": 0.123,
+      "last": 0.065,
+      "label": 0,
+      "paraInit": 0
+    },
+    "qokain": {
+      "n": 277,
+      "first": 0.094,
+      "last": 0.036,
+      "label": 0,
+      "paraInit": 0
+    },
+    "chedy": {
+      "n": 488,
+      "first": 0.014,
+      "last": 0.07,
+      "label": 0,
+      "paraInit": 0
+    },
+    "qokedy": {
+      "n": 269,
+      "first": 0.078,
+      "last": 0.037,
+      "label": 0,
+      "paraInit": 0.004
+    },
+    "shedy": {
+      "n": 422,
+      "first": 0.017,
+      "last": 0.05,
+      "label": 0.002,
+      "paraInit": 0
+    },
+    "qokeedy": {
+      "n": 303,
+      "first": 0.106,
+      "last": 0.017,
+      "label": 0,
+      "paraInit": 0.01
+    },
+    "okedy": {
+      "n": 109,
+      "first": 0.009,
+      "last": 0.064,
+      "label": 0.028,
+      "paraInit": 0.009
+    },
+    "okeedy": {
+      "n": 102,
+      "first": 0.039,
+      "last": 0.098,
+      "label": 0,
+      "paraInit": 0
+    },
+    "otedy": {
+      "n": 146,
+      "first": 0.027,
+      "last": 0.041,
+      "label": 0.048,
+      "paraInit": 0.007
+    },
+    "qokal": {
+      "n": 192,
+      "first": 0.073,
+      "last": 0.073,
+      "label": 0.016,
+      "paraInit": 0
+    },
+    "lchedy": {
+      "n": 116,
+      "first": 0.052,
+      "last": 0.147,
+      "label": 0,
+      "paraInit": 0
+    }
+  },
+  "langSelectivity": {
+    "ar": {
+      "n": 312,
+      "shareA": 0.163,
+      "expectedA": 0.321
+    },
+    "shol": {
+      "n": 164,
+      "shareA": 0.659,
+      "expectedA": 0.321
+    },
+    "y": {
+      "n": 255,
+      "shareA": 0.349,
+      "expectedA": 0.321
+    },
+    "or": {
+      "n": 350,
+      "shareA": 0.28,
+      "expectedA": 0.321
+    },
+    "daiin": {
+      "n": 754,
+      "shareA": 0.605,
+      "expectedA": 0.321
+    },
+    "okaiin": {
+      "n": 202,
+      "shareA": 0.173,
+      "expectedA": 0.321
+    },
+    "s": {
+      "n": 267,
+      "shareA": 0.607,
+      "expectedA": 0.321
+    },
+    "dain": {
+      "n": 186,
+      "shareA": 0.425,
+      "expectedA": 0.321
+    },
+    "chor": {
+      "n": 193,
+      "shareA": 0.86,
+      "expectedA": 0.321
+    },
+    "chol": {
+      "n": 358,
+      "shareA": 0.726,
+      "expectedA": 0.321
+    },
+    "shey": {
+      "n": 252,
+      "shareA": 0.222,
+      "expectedA": 0.321
+    },
+    "dar": {
+      "n": 262,
+      "shareA": 0.328,
+      "expectedA": 0.321
+    },
+    "chey": {
+      "n": 331,
+      "shareA": 0.26,
+      "expectedA": 0.321
+    },
+    "okeey": {
+      "n": 155,
+      "shareA": 0.206,
+      "expectedA": 0.321
+    },
+    "dal": {
+      "n": 199,
+      "shareA": 0.362,
+      "expectedA": 0.321
+    },
+    "l": {
+      "n": 167,
+      "shareA": 0.168,
+      "expectedA": 0.321
+    },
+    "ol": {
+      "n": 519,
+      "shareA": 0.191,
+      "expectedA": 0.321
+    },
+    "cheol": {
+      "n": 162,
+      "shareA": 0.401,
+      "expectedA": 0.321
+    },
+    "o": {
+      "n": 147,
+      "shareA": 0.422,
+      "expectedA": 0.321
+    },
+    "qokeey": {
+      "n": 302,
+      "shareA": 0.132,
+      "expectedA": 0.321
+    },
+    "aiin": {
+      "n": 443,
+      "shareA": 0.181,
+      "expectedA": 0.321
+    },
+    "dy": {
+      "n": 197,
+      "shareA": 0.487,
+      "expectedA": 0.321
+    },
+    "qokaiin": {
+      "n": 265,
+      "shareA": 0.083,
+      "expectedA": 0.321
+    },
+    "al": {
+      "n": 207,
+      "shareA": 0.116,
+      "expectedA": 0.321
+    },
+    "cheey": {
+      "n": 172,
+      "shareA": 0.221,
+      "expectedA": 0.321
+    },
+    "qokar": {
+      "n": 152,
+      "shareA": 0.099,
+      "expectedA": 0.321
+    },
+    "qokain": {
+      "n": 277,
+      "shareA": 0.014,
+      "expectedA": 0.321
+    },
+    "chedy": {
+      "n": 487,
+      "shareA": 0.002,
+      "expectedA": 0.321
+    },
+    "qokedy": {
+      "n": 269,
+      "shareA": 0.004,
+      "expectedA": 0.321
+    },
+    "shedy": {
+      "n": 422,
+      "shareA": 0.005,
+      "expectedA": 0.321
+    },
+    "qokeedy": {
+      "n": 303,
+      "shareA": 0,
+      "expectedA": 0.321
+    },
+    "qokal": {
+      "n": 187,
+      "shareA": 0.086,
+      "expectedA": 0.321
+    }
+  },
+  "adjacentRepetition": 274,
+  "topBigrams": [
+    [
+      "s aiin",
+      54
+    ],
+    [
+      "or aiin",
+      53
+    ],
+    [
+      "chol daiin",
+      31
+    ],
+    [
+      "ol shedy",
+      24
+    ],
+    [
+      "ar aiin",
+      23
+    ],
+    [
+      "r aiin",
+      22
+    ],
+    [
+      "ol chedy",
+      22
+    ],
+    [
+      "chol chol",
+      21
+    ],
+    [
+      "shedy qokedy",
+      21
+    ],
+    [
+      "o l",
+      20
+    ],
+    [
+      "chedy qokeey",
+      19
+    ],
+    [
+      "chedy qokain",
+      18
+    ],
+    [
+      "qokeedy qokeedy",
+      18
+    ],
+    [
+      "shedy qokaiin",
+      17
+    ],
+    [
+      "s ar",
+      16
+    ]
+  ],
+  "unigramEntropyBits": 10.361,
+  "condEntropyBitsGivenPrevTop200": 6.228,
+  "familyCount": 4,
+  "typesInFamilies": 261,
+  "largestFamilySize": 249,
+  "topFamilies": [
+    [
+      "daiin",
+      "ol",
+      "chedy",
+      "aiin",
+      "shedy",
+      "chol",
+      "or",
+      "chey",
+      "ar",
+      "qokeey",
+      "qokeedy",
+      "s"
+    ],
+    [
+      "chckhy",
+      "chcthy",
+      "shckhy",
+      "checkhy",
+      "sheckhy",
+      "shcthy",
+      "chckhey",
+      "checthy"
+    ],
+    [
+      "chodaiin",
+      "chedaiin",
+      "shodaiin"
+    ],
+    [
+      "otchol"
+    ]
+  ],
+  "glyphs": {
+    "inventory": [
+      [
+        "o",
+        23022,
+        "12.98%"
+      ],
+      [
+        "e",
+        18273,
+        "10.3%"
+      ],
+      [
+        "h",
+        16775,
+        "9.46%"
+      ],
+      [
+        "y",
+        16414,
+        "9.25%"
+      ],
+      [
+        "a",
+        13236,
+        "7.46%"
+      ],
+      [
+        "c",
+        12396,
+        "6.99%"
+      ],
+      [
+        "d",
+        12154,
+        "6.85%"
+      ],
+      [
+        "i",
+        11141,
+        "6.28%"
+      ],
+      [
+        "k",
+        10219,
+        "5.76%"
+      ],
+      [
+        "l",
+        9739,
+        "5.49%"
+      ],
+      [
+        "r",
+        6796,
+        "3.83%"
+      ],
+      [
+        "s",
+        6642,
+        "3.74%"
+      ],
+      [
+        "t",
+        6180,
+        "3.48%"
+      ],
+      [
+        "n",
+        5853,
+        "3.3%"
+      ],
+      [
+        "q",
+        5338,
+        "3.01%"
+      ],
+      [
+        "p",
+        1549,
+        "0.87%"
+      ],
+      [
+        "m",
+        977,
+        "0.55%"
+      ],
+      [
+        "f",
+        453,
+        "0.26%"
+      ],
+      [
+        "g",
+        133,
+        "0.07%"
+      ],
+      [
+        "x",
+        27,
+        "0.02%"
+      ],
+      [
+        "b",
+        15,
+        "0.01%"
+      ],
+      [
+        "j",
+        12,
+        "0.01%"
+      ],
+      [
+        "u",
+        7,
+        "0%"
+      ],
+      [
+        "z",
+        5,
+        "0%"
+      ],
+      [
+        "v",
+        1,
+        "0%"
+      ]
+    ],
+    "positional": {
+      "f": {
+        "initRate": 0.252,
+        "finalRate": 0.053
+      },
+      "a": {
+        "initRate": 0.137,
+        "finalRate": 0.005
+      },
+      "c": {
+        "initRate": 0.514,
+        "finalRate": 0
+      },
+      "h": {
+        "initRate": 0,
+        "finalRate": 0.004
+      },
+      "y": {
+        "initRate": 0.102,
+        "finalRate": 0.861
+      },
+      "s": {
+        "initRate": 0.627,
+        "finalRate": 0.167
+      },
+      "k": {
+        "initRate": 0.119,
+        "finalRate": 0.008
+      },
+      "l": {
+        "initRate": 0.145,
+        "finalRate": 0.557
+      },
+      "r": {
+        "initRate": 0.073,
+        "finalRate": 0.766
+      },
+      "t": {
+        "initRate": 0.157,
+        "finalRate": 0.01
+      },
+      "i": {
+        "initRate": 0.002,
+        "finalRate": 0.001
+      },
+      "n": {
+        "initRate": 0.001,
+        "finalRate": 0.972
+      },
+      "o": {
+        "initRate": 0.32,
+        "finalRate": 0.051
+      },
+      "e": {
+        "initRate": 0.006,
+        "finalRate": 0.005
+      },
+      "d": {
+        "initRate": 0.266,
+        "finalRate": 0.045
+      },
+      "p": {
+        "initRate": 0.342,
+        "finalRate": 0.021
+      },
+      "m": {
+        "initRate": 0.007,
+        "finalRate": 0.944
+      },
+      "q": {
+        "initRate": 0.99,
+        "finalRate": 0
+      },
+      "g": {
+        "initRate": 0.105,
+        "finalRate": 0.917
+      },
+      "v": {
+        "initRate": 1,
+        "finalRate": 0
+      },
+      "b": {
+        "initRate": 0,
+        "finalRate": 0.867
+      },
+      "j": {
+        "initRate": 0.083,
+        "finalRate": 0.333
+      },
+      "u": {
+        "initRate": 0,
+        "finalRate": 1
+      },
+      "z": {
+        "initRate": 0.2,
+        "finalRate": 0.2
+      },
+      "x": {
+        "initRate": 0.37,
+        "finalRate": 0.37
+      }
+    },
+    "hardTransitions": [
+      [
+        "q->o",
+        0.977,
+        5338
+      ],
+      [
+        "n->#",
+        0.972,
+        5853
+      ],
+      [
+        "m->#",
+        0.944,
+        977
+      ],
+      [
+        "y->#",
+        0.861,
+        16414
+      ],
+      [
+        "c->h",
+        0.827,
+        12396
+      ],
+      [
+        "r->#",
+        0.766,
+        6796
+      ],
+      [
+        "s->h",
+        0.645,
+        6642
+      ]
+    ],
+    "successorEntropy": {
+      "f": 2.463,
+      "a": 1.956,
+      "c": 0.957,
+      "h": 2.311,
+      "y": 0.983,
+      "s": 1.719,
+      "^": 3.203,
+      "k": 2.437,
+      "l": 2.355,
+      "r": 1.353,
+      "t": 2.695,
+      "i": 1.51,
+      "n": 0.263,
+      "o": 3.068,
+      "e": 2.572,
+      "d": 1.815,
+      "p": 2.333,
+      "m": 0.461,
+      "q": 0.209
+    }
+  }
+}

@@ -1,0 +1,253 @@
+<title>Voynichese Linter</title>
+<style>
+  :root {
+    --paper: #faf8f4; --ink: #2b2320; --ink-soft: #6b6259; --rule: #d9d2c4;
+    --accent: #4f7a5b; --accent-ink: #3d6249; --rubric: #a04432; --amber: #9a6d1f;
+    --panel: #f1ede4; --chip-ok: #e6efe8; --chip-err: #f3e2dc; --chip-warn: #f2ead6;
+    --mono: ui-monospace, "Cascadia Code", Consolas, Menlo, monospace;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Charter, Georgia, serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --paper:#1c1917; --ink:#e8e2d6; --ink-soft:#a89e90; --rule:#3a342c;
+      --accent:#7fae8c; --accent-ink:#8fbc9b; --rubric:#d08a6f; --amber:#cfa14e;
+      --panel:#26221d; --chip-ok:#2a332b; --chip-err:#3a2b26; --chip-warn:#36301f; }
+  }
+  :root[data-theme="dark"] { --paper:#1c1917; --ink:#e8e2d6; --ink-soft:#a89e90; --rule:#3a342c;
+      --accent:#7fae8c; --accent-ink:#8fbc9b; --rubric:#d08a6f; --amber:#cfa14e;
+      --panel:#26221d; --chip-ok:#2a332b; --chip-err:#3a2b26; --chip-warn:#36301f; }
+  :root[data-theme="light"] { --paper:#faf8f4; --ink:#2b2320; --ink-soft:#6b6259; --rule:#d9d2c4;
+      --accent:#4f7a5b; --accent-ink:#3d6249; --rubric:#a04432; --amber:#9a6d1f;
+      --panel:#f1ede4; --chip-ok:#e6efe8; --chip-err:#f3e2dc; --chip-warn:#f2ead6; }
+
+  html { background: var(--paper); }
+  body { font-family: var(--serif); color: var(--ink); margin: 0; line-height: 1.5; }
+  .wrap { max-width: 44rem; margin: 0 auto; padding: 2.2rem 1.25rem 4rem; }
+  .eyebrow { font-family: var(--mono); font-size: .7rem; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--accent-ink); }
+  h1 { font-size: clamp(1.6rem, 4.5vw, 2.2rem); margin: .3rem 0 .3rem; font-weight: 600; text-wrap: balance; }
+  .sub { color: var(--ink-soft); margin: 0 0 1.6rem; }
+
+  textarea { width: 100%; box-sizing: border-box; min-height: 5.5rem; resize: vertical;
+    font-family: var(--mono); font-size: .95rem; line-height: 1.7; color: var(--ink);
+    background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+    padding: .8rem .9rem; }
+  textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .btns { display: flex; flex-wrap: wrap; gap: .5rem; margin: .7rem 0 1.4rem; }
+  button { font-family: var(--mono); font-size: .74rem; letter-spacing: .04em;
+    background: none; border: 1px solid var(--rule); border-radius: 4px;
+    color: var(--ink); padding: .35rem .7rem; cursor: pointer; }
+  button:hover { border-color: var(--accent); color: var(--accent-ink); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .verdict { font-family: var(--mono); font-size: .8rem; letter-spacing: .06em;
+    padding: .55rem .9rem; border-radius: 4px; margin-bottom: 1rem;
+    border: 1px solid var(--rule); display: flex; gap: 1rem; flex-wrap: wrap; }
+  .verdict.good { border-color: var(--accent); color: var(--accent-ink); }
+  .verdict.bad { border-color: var(--rubric); color: var(--rubric); }
+  .verdict b { font-weight: 700; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: .45rem .5rem; margin-bottom: 1.2rem; }
+  .chip { font-family: var(--mono); font-size: .84rem; padding: .22rem .55rem;
+    border-radius: 4px; border: 1px solid var(--rule); cursor: pointer; }
+  .chip.ok    { background: var(--chip-ok); color: var(--accent-ink); }
+  .chip.novel { background: none; color: var(--accent-ink); border-style: dashed; }
+  .chip.warn  { background: var(--chip-warn); color: var(--amber); }
+  .chip.error { background: var(--chip-err); color: var(--rubric); text-decoration: underline wavy; text-underline-offset: 3px; }
+  .chip.sel { outline: 2px solid currentColor; outline-offset: 1px; }
+
+  .detail { border: 1px solid var(--rule); border-left: 3px solid var(--accent);
+    border-radius: 4px; padding: .9rem 1.1rem; font-size: .92rem; }
+  .detail.error { border-left-color: var(--rubric); }
+  .detail.warn { border-left-color: var(--amber); }
+  .detail h3 { margin: 0 0 .3rem; font-family: var(--mono); font-size: 1rem; }
+  .detail p { margin: .3rem 0; }
+  .detail .units span { font-family: var(--mono); background: var(--panel);
+    border: 1px solid var(--rule); border-radius: 3px; padding: .05rem .35rem; margin-right: .3rem; font-size: .8rem; }
+  .detail .k { font-family: var(--mono); font-size: .68rem; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ink-soft); display: block; margin-top: .6rem; }
+  .sugg { font-family: var(--mono); font-size: .84rem; }
+  .sugg b { color: var(--accent-ink); cursor: pointer; text-decoration: underline dotted; }
+  .legend { font-family: var(--mono); font-size: .68rem; color: var(--ink-soft);
+    display: flex; gap: 1.1rem; flex-wrap: wrap; margin: 0 0 .6rem; }
+  .legend i { font-style: normal; }
+  .foot { margin-top: 2.5rem; padding-top: .9rem; border-top: 1px solid var(--rule);
+    font-family: var(--mono); font-size: .7rem; color: var(--ink-soft); line-height: 1.8; }
+  .foot a { color: var(--accent-ink); }
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">Voynichese-IR toolchain · corpus-trained validator</div>
+  <h1>Voynichese Linter</h1>
+  <p class="sub">Type or paste text in EVA letters. Every word is parsed by the finite automaton
+    induced from all 37,844 manuscript tokens — like a compiler front-end for a language nobody
+    can read. Separate words with spaces or dots.</p>
+
+  <textarea id="in" spellcheck="false" autocapitalize="off"
+    placeholder="e.g.  qokeedy shol daiin"></textarea>
+  <div class="btns">
+    <button id="b-auth">authentic line (f1r.2)</button>
+    <button id="b-bad">corrupted sample</button>
+    <button id="b-clear">clear</button>
+  </div>
+
+  <div id="verdict"></div>
+  <div class="legend">
+    <i style="color:var(--accent-ink)">■ attested</i>
+    <i style="color:var(--accent-ink)">◌ novel but grammatical</i>
+    <i style="color:var(--amber)">■ rare construction</i>
+    <i style="color:var(--rubric)">■ syntax error</i>
+  </div>
+  <div id="chips" class="chips"></div>
+  <div id="detail"></div>
+
+  <div class="foot">
+    grammar: 267-production DFA over 28 glyph units, trained on the ZL3b transliteration ·
+    coverage 96.9% of the manuscript · "attested" = occurs ≥2× in the corpus ·
+    companion to the <a href="https://claude.ai/code/artifact/7767824f-2ce0-4616-b1c4-1349a9298b86">Voynichese-IR specification</a>
+  </div>
+</div>
+
+<script>
+const G = __GRAMMAR__;
+const MIN_EDGE = 15, RARE_EDGE = 50;
+const rowTotals = {};
+for (const [s, row] of Object.entries(G.edges))
+  rowTotals[s] = Object.values(row).reduce((a, b) => a + b, 0);
+
+const INSIDE_ONLY = { h: 'ch / sh / ckh / cth / cph / cfh', c: 'ch / ckh / cth / cph / cfh' };
+
+function segment(w) {
+  const out = []; let i = 0;
+  outer: while (i < w.length) {
+    for (const u of G.units) if (w.startsWith(u, i)) { out.push(u); i += u.length; continue outer; }
+    return { error: { at: i, char: w[i] } };
+  }
+  return { units: out };
+}
+function expected(state) {
+  const row = G.edges[state] || {};
+  return Object.entries(row).filter(([, n]) => n >= MIN_EDGE)
+    .sort((a, b) => b[1] - a[1]).slice(0, 6)
+    .map(([u, n]) => ({ u: u === '$' ? '(end)' : u, p: (n / rowTotals[state]).toFixed(2) }));
+}
+function editDist(a, b, max) {
+  if (Math.abs(a.length - b.length) > max) return max + 1;
+  const dp = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+  for (let j = 1; j <= b.length; j++) dp[0][j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    let rowMin = Infinity;
+    for (let j = 1; j <= b.length; j++) {
+      dp[i][j] = Math.min(dp[i-1][j] + 1, dp[i][j-1] + 1, dp[i-1][j-1] + (a[i-1] === b[j-1] ? 0 : 1));
+      rowMin = Math.min(rowMin, dp[i][j]);
+    }
+    if (rowMin > max) return max + 1;
+  }
+  return dp[a.length][b.length];
+}
+function suggest(w) {
+  const out = [];
+  for (const [cand, n] of Object.entries(G.lexicon)) {
+    const d = editDist(w, cand, 2);
+    if (d <= 2) out.push({ cand, n, d });
+  }
+  return out.sort((a, b) => a.d - b.d || b.n - a.n).slice(0, 3);
+}
+function lintWord(w) {
+  const res = { word: w };
+  const bad = [...w].find(c => !/[a-z]/.test(c));
+  if (bad) return { ...res, status: 'error',
+    message: `illegal character '${bad}' — only EVA letters a–z are glyphs`, suggestions: [] };
+  const seg = segment(w);
+  if (seg.error) {
+    const ch = seg.error.char;
+    const hint = INSIDE_ONLY[ch]
+      ? `'${ch}' only exists inside the compound glyphs ${INSIDE_ONLY[ch]} — it never stands alone`
+      : `'${ch}' at position ${seg.error.at + 1} is not in the glyph-unit inventory`;
+    return { ...res, status: 'error', message: hint, suggestions: suggest(w) };
+  }
+  res.units = seg.units;
+  let state = '^', bits = 0, rare = null;
+  for (let i = 0; i < seg.units.length; i++) {
+    const u = seg.units[i];
+    const n = (G.edges[state] || {})[u] || 0;
+    if (n < MIN_EDGE) return { ...res, status: 'error',
+      message: state === '^' ? `no Voynich word begins with '${u}'`
+        : `'${u}' cannot follow '${state}' (unit ${i + 1})`,
+      expected: expected(state), suggestions: suggest(w) };
+    if (n < RARE_EDGE && !rare) rare = `${state}→${u}`;
+    bits += -Math.log2(n / rowTotals[state]);
+    state = u;
+  }
+  const endN = (G.edges[state] || {})['$'] || 0;
+  if (endN < MIN_EDGE) return { ...res, status: 'error',
+    message: `a word cannot end after '${state}' — unterminated right edge`,
+    expected: expected(state), suggestions: suggest(w) };
+  bits += -Math.log2(endN / rowTotals[state]);
+  res.bits = (bits / (seg.units.length + 1)).toFixed(2);
+  const att = G.lexicon[w];
+  if (att) { res.status = 'ok'; res.att = att;
+    res.message = `attested ${att}× in the manuscript` + (rare ? ` · rare transition ${rare}` : ''); }
+  else if (rare) { res.status = 'warn';
+    res.message = `grammatical, but uses the rare transition ${rare}`; res.suggestions = suggest(w); }
+  else { res.status = 'novel';
+    res.message = 'grammatical and idiomatic, but never attested — a well-formed new word'; res.suggestions = suggest(w); }
+  return res;
+}
+
+const $ = id => document.getElementById(id);
+let results = [], selected = -1;
+
+function render() {
+  const chips = $('chips'), verdict = $('verdict');
+  chips.innerHTML = '';
+  if (!results.length) { verdict.innerHTML = ''; $('detail').innerHTML = ''; return; }
+  const errs = results.filter(r => r.status === 'error').length;
+  const ok = results.length - errs;
+  verdict.className = 'verdict ' + (errs ? 'bad' : 'good');
+  verdict.innerHTML = errs
+    ? `<b>NOT PROCESSABLE</b><span>${errs} syntax error${errs > 1 ? 's' : ''} in ${results.length} words</span>`
+    : `<b>PROCESSABLE</b><span>${ok} word${ok > 1 ? 's' : ''} accepted by the grammar</span>`;
+  results.forEach((r, i) => {
+    const c = document.createElement('button');
+    c.className = 'chip ' + r.status + (i === selected ? ' sel' : '');
+    c.textContent = r.word;
+    c.onclick = () => { selected = i; render(); };
+    chips.appendChild(c);
+  });
+  renderDetail();
+}
+function renderDetail() {
+  const d = $('detail');
+  if (selected < 0 || !results[selected]) { d.innerHTML = results.length
+    ? '<p class="sub">Click a word for its parse report.</p>' : ''; return; }
+  const r = results[selected];
+  let h = `<div class="detail ${r.status}"><h3>${r.word}</h3><p>${r.message}</p>`;
+  if (r.units) h += `<span class="k">glyph units</span><p class="units">` +
+    r.units.map(u => `<span>${u}</span>`).join('') + `</p>`;
+  if (r.bits) h += `<span class="k">surprisal</span><p>${r.bits} bits/unit ${+r.bits < 3 ? '(very idiomatic)' : +r.bits < 4.2 ? '(typical)' : '(unusual)'}</p>`;
+  if (r.expected) h += `<span class="k">legal continuations at failure point</span><p class="sugg">` +
+    r.expected.map(e => `${e.u}&thinsp;(${e.p})`).join(' &middot; ') + `</p>`;
+  if (r.suggestions && r.suggestions.length) h += `<span class="k">did you mean</span><p class="sugg">` +
+    r.suggestions.map(s => `<b data-w="${s.cand}">${s.cand}</b>&thinsp;(${s.n}×)`).join(' &middot; ') + `</p>`;
+  h += '</div>';
+  d.innerHTML = h;
+  d.querySelectorAll('b[data-w]').forEach(b => b.onclick = () => {
+    const w = results[selected].word;
+    $('in').value = $('in').value.replace(new RegExp('\\b' + w + '\\b'), b.dataset.w);
+    run();
+  });
+}
+function run() {
+  const words = $('in').value.toLowerCase().split(/[\s.,]+/).filter(Boolean);
+  results = words.map(lintWord);
+  if (selected >= results.length) selected = -1;
+  const firstErr = results.findIndex(r => r.status === 'error');
+  if (firstErr >= 0 && (selected < 0 || results[selected].status !== 'error')) selected = firstErr;
+  render();
+}
+$('in').addEventListener('input', run);
+$('b-auth').onclick = () => { $('in').value = 'sory ckhar or y kair chtaiin shar ase cthar cthar dan'; selected = -1; run(); };
+$('b-bad').onclick = () => { $('in').value = 'qokeedy hol daiinq chq okeody'; selected = -1; run(); };
+$('b-clear').onclick = () => { $('in').value = ''; selected = -1; run(); };
+</script>

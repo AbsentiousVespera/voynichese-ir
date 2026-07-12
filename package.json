@@ -1,0 +1,19 @@
+{
+  "name": "voynichese-ir",
+  "version": "0.1.0",
+  "description": "The Voynich Manuscript reverse-engineered as a formal language: corpus normalization, grammar induction, parser, and linter. Syntax only — no translation attempted.",
+  "license": "MIT",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "fetch": "node src/fetch_corpus.js",
+    "normalize": "node src/parse_ivtff.js",
+    "structure": "node src/structure_shape.js",
+    "lexical": "node src/lexical_glyph.js",
+    "grammar": "node src/grammar.js",
+    "refine": "node src/refine.js",
+    "export": "node src/export_grammar.js",
+    "all": "node src/parse_ivtff.js && node src/structure_shape.js && node src/lexical_glyph.js && node src/grammar.js && node src/refine.js && node src/export_grammar.js",
+    "lint": "node src/lint.js",
+    "build:linter": "node -e \"const fs=require('fs');fs.writeFileSync('reports/voynichese-linter.html',fs.readFileSync('src/linter_page.template.html','utf8').replace('__GRAMMAR__',fs.readFileSync('build/grammar_export.json','utf8')))\""
+  }
+}
